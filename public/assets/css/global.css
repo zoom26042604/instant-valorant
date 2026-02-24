@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+@theme {
+    --color-valo-red: #bd3944;
+    --color-valo-dark: #000000;
+    --color-valo-card: #111823;
+}
