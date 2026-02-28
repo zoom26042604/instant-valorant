@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion - Instant Valorant</title>
+    <title>Instant Valorant</title>
 </head>
 <body>
-    <h1>Connexion</h1>
+    <h1>Bienvenue sur Instant Valorant</h1>
 </body>
 </html>
