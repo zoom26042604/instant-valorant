@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use R;
+
 class AuthController
 {
     public function register(array $data): void
@@ -19,8 +21,8 @@ class AuthController
         }
 
         $user = R::dispense('user');
-        $user->name     = $data['name'];
-        $user->email    = $data['email'];
+        $user->name = $data['name'];
+        $user->email = $data['email'];
         $user->password = password_hash($data['password'], PASSWORD_ARGON2ID);
         R::store($user);
 
@@ -45,8 +47,8 @@ class AuthController
         }
 
         session_regenerate_id(true);
-        $_SESSION['user_id']    = $user->id;
-        $_SESSION['user_name']  = $user->name;
+        $_SESSION['user_id'] = $user->id;
+        $_SESSION['user_name'] = $user->name;
         $_SESSION['user_email'] = $user->email;
 
         echo json_encode(['message' => 'Logged in', 'user' => ['id' => $user->id, 'name' => $user->name]]);
@@ -73,14 +75,14 @@ class AuthController
         }
 
         $user = R::dispense('user');
-        $user->name     = $data['name'];
-        $user->email    = $data['email'];
+        $user->name = $data['name'];
+        $user->email = $data['email'];
         $user->password = password_hash($data['password'], PASSWORD_ARGON2ID);
         R::store($user);
 
         session_regenerate_id(true);
-        $_SESSION['user_id']    = $user->id;
-        $_SESSION['user_name']  = $user->name;
+        $_SESSION['user_id'] = $user->id;
+        $_SESSION['user_name'] = $user->name;
         $_SESSION['user_email'] = $user->email;
 
         header('Location: /dashboard');
@@ -104,8 +106,8 @@ class AuthController
         }
 
         session_regenerate_id(true);
-        $_SESSION['user_id']    = $user->id;
-        $_SESSION['user_name']  = $user->name;
+        $_SESSION['user_id'] = $user->id;
+        $_SESSION['user_name'] = $user->name;
         $_SESSION['user_email'] = $user->email;
 
         header('Location: /dashboard');
