@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use R;
+
 class UserController
 {
     public function index(): void
