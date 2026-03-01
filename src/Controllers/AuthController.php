@@ -24,6 +24,7 @@ class AuthController
         $user->name = $data['name'];
         $user->email = $data['email'];
         $user->password = password_hash($data['password'], PASSWORD_ARGON2ID);
+        $user->role = 'user';
         R::store($user);
 
         http_response_code(201);
@@ -50,8 +51,9 @@ class AuthController
         $_SESSION['user_id'] = $user->id;
         $_SESSION['user_name'] = $user->name;
         $_SESSION['user_email'] = $user->email;
+        $_SESSION['user_role'] = $user->role ?? 'user';
 
-        echo json_encode(['message' => 'Logged in', 'user' => ['id' => $user->id, 'name' => $user->name]]);
+        echo json_encode(['message' => 'Logged in', 'user' => ['id' => $user->id, 'name' => $user->name, 'role' => $user->role]]);
     }
 
     public function logout(): void
@@ -78,12 +80,14 @@ class AuthController
         $user->name = $data['name'];
         $user->email = $data['email'];
         $user->password = password_hash($data['password'], PASSWORD_ARGON2ID);
+        $user->role = 'user';
         R::store($user);
 
         session_regenerate_id(true);
         $_SESSION['user_id'] = $user->id;
         $_SESSION['user_name'] = $user->name;
         $_SESSION['user_email'] = $user->email;
+        $_SESSION['user_role'] = 'user';
 
         header('Location: /dashboard');
         exit;
@@ -109,6 +113,7 @@ class AuthController
         $_SESSION['user_id'] = $user->id;
         $_SESSION['user_name'] = $user->name;
         $_SESSION['user_email'] = $user->email;
+        $_SESSION['user_role'] = $user->role ?? 'user';
 
         header('Location: /dashboard');
         exit;
