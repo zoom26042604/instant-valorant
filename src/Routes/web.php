@@ -1,5 +1,6 @@
 <?php
 
+use R;
 use App\Controllers\AuthController;
 use App\Controllers\GameController;
 use App\Controllers\LevelController;
