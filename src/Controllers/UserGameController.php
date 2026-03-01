@@ -32,6 +32,11 @@ class UserGameController
                 echo json_encode(['error' => 'Game not found']);
                 return;
             }
+            if (R::findOne('usergame', 'user_id = ? AND game_id = ?', [$userId, $game->id])) {
+                http_response_code(409);
+                echo json_encode(['error' => 'Game already in library']);
+                return;
+            }
             $ug->game_id = $game->id;
         } else {
             if (empty($data['custom_name'])) {
@@ -47,6 +52,11 @@ class UserGameController
         }
 
         $id = R::store($ug);
+
+        if (!empty($ug->game_id)) {
+            $this->autoUnlockDebutant($userId, $ug->game_id);
+        }
+
         http_response_code(201);
         echo json_encode(['id' => $id, 'message' => 'Game added to library']);
     }
@@ -105,6 +115,11 @@ class UserGameController
                 header('Location: /profile/games/add');
                 exit;
             }
+            if (R::findOne('usergame', 'user_id = ? AND game_id = ?', [$userId, $game->id])) {
+                $_SESSION['error'] = 'Ce jeu est déjà dans votre bibliothèque';
+                header('Location: /profile/games/add');
+                exit;
+            }
             $ug->game_id = $game->id;
         } else {
             if (empty($data['custom_name'])) {
@@ -120,6 +135,11 @@ class UserGameController
         }
 
         R::store($ug);
+
+        if (!empty($ug->game_id)) {
+            $this->autoUnlockDebutant($userId, $ug->game_id);
+        }
+
         header('Location: /profile');
         exit;
     }
@@ -158,5 +178,21 @@ class UserGameController
 
         header('Location: /profile');
         exit;
+    }
+
+    private function autoUnlockDebutant(int $userId, int $gameId): void
+    {
+        $achievement = R::findOne('achievement', 'game_id = ? AND name = ?', [$gameId, 'Débutant']);
+        if (!$achievement) {
+            return;
+        }
+        if (R::findOne('userachievement', 'user_id = ? AND achievement_id = ?', [$userId, $achievement->id])) {
+            return;
+        }
+        $ua = R::dispense('userachievement');
+        $ua->user_id = $userId;
+        $ua->achievement_id = $achievement->id;
+        $ua->unlocked_at = date('Y-m-d H:i:s');
+        R::store($ua);
     }
 }
