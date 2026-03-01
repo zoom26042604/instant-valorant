@@ -37,7 +37,8 @@ $games = [
 ];
 
 foreach ($games as $g) {
-    if (!R::findOne('game', 'name = ?', [$g['name']])) {
+    $existing = R::findOne('game', 'name = ?', [$g['name']]);
+    if (!$existing) {
         $game = R::dispense('game');
         $game->name = $g['name'];
         $game->type = $g['type'];
@@ -45,8 +46,20 @@ foreach ($games as $g) {
         $game->image_url = null;
         R::store($game);
         echo "Jeu cree : {$g['name']}\n";
+        $gameId = $game->id;
     } else {
         echo "Jeu existe deja : {$g['name']}\n";
+        $gameId = $existing->id;
+    }
+
+    // Succes Debutant par jeu
+    if (!R::findOne('achievement', 'game_id = ? AND name = ?', [$gameId, 'Débutant'])) {
+        $a = R::dispense('achievement');
+        $a->game_id = $gameId;
+        $a->name = 'Débutant';
+        $a->description = 'Premier pas sur ' . $g['name'] . ' — ajoute ce jeu à ta bibliothèque.';
+        R::store($a);
+        echo "  -> Succes cree : Debutant ({$g['name']})\n";
     }
 }
 
