@@ -1,30 +1,149 @@
 <?php
 
 use App\Controllers\AuthController;
+use App\Controllers\GameController;
+use App\Controllers\LevelController;
+use App\Controllers\AchievementController;
+use App\Controllers\ProfileController;
+use App\Controllers\UserGameController;
+use App\Controllers\AdminController;
+use App\Helpers\Auth;
 
 $auth = new AuthController();
 
-match (true) {
-    $uri === '/' => require __DIR__ . '/../../views/layout/home.php',
+// Auth
+if ($uri === '/' && $method === 'GET') {
+    require __DIR__ . '/../../views/layout/home.php';
+} elseif ($uri === '/login' && $method === 'GET') {
+    require __DIR__ . '/../../views/auth/login.php';
+} elseif ($uri === '/login' && $method === 'POST') {
+    $auth->webLogin($_POST);
+} elseif ($uri === '/register' && $method === 'GET') {
+    require __DIR__ . '/../../views/auth/register.php';
+} elseif ($uri === '/register' && $method === 'POST') {
+    $auth->webRegister($_POST);
+} elseif ($uri === '/logout') {
+    $auth->webLogout();
+} elseif ($uri === '/dashboard') {
+    Auth::webRequireAuth();
+    require __DIR__ . '/../../views/auth/dashboard.php';
 
-    $uri === '/login' && $method === 'GET' => require __DIR__ . '/../../views/auth/login.php',
-    $uri === '/login' && $method === 'POST' => $auth->webLogin($_POST),
+// Games
+} elseif ($uri === '/games' && $method === 'GET') {
+    $games = R::findAll('game');
+    require __DIR__ . '/../../views/games/index.php';
+} elseif ($uri === '/games/create' && $method === 'GET') {
+    Auth::webRequireAdmin();
+    require __DIR__ . '/../../views/games/create.php';
+} elseif ($uri === '/games' && $method === 'POST') {
+    (new GameController())->webStore($_POST);
+} elseif (preg_match('#^/games/(\d+)$#', $uri, $m) && $method === 'GET') {
+    $gameId = (int)$m[1];
+    $game = R::load('game', $gameId);
+    if (!$game->id) { http_response_code(404); echo '404 Not Found'; exit; }
+    $levels = R::find('level', 'game_id = ?', [$gameId]);
+    $achievements = R::find('achievement', 'game_id = ?', [$gameId]);
+    require __DIR__ . '/../../views/games/show.php';
+} elseif (preg_match('#^/games/(\d+)/edit$#', $uri, $m) && $method === 'GET') {
+    Auth::webRequireAdmin();
+    $gameId = (int)$m[1];
+    $game = R::load('game', $gameId);
+    if (!$game->id) { http_response_code(404); echo '404 Not Found'; exit; }
+    require __DIR__ . '/../../views/games/edit.php';
+} elseif (preg_match('#^/games/(\d+)/update$#', $uri, $m) && $method === 'POST') {
+    (new GameController())->webUpdate((int)$m[1], $_POST);
+} elseif (preg_match('#^/games/(\d+)/delete$#', $uri, $m) && $method === 'POST') {
+    (new GameController())->webDestroy((int)$m[1]);
 
-    $uri === '/register' && $method === 'GET' => require __DIR__ . '/../../views/auth/register.php',
-    $uri === '/register' && $method === 'POST' => $auth->webRegister($_POST),
+// Levels
+} elseif (preg_match('#^/games/(\d+)/levels/create$#', $uri, $m) && $method === 'GET') {
+    Auth::webRequireAdmin();
+    $gameId = (int)$m[1];
+    $game = R::load('game', $gameId);
+    if (!$game->id) { http_response_code(404); echo '404 Not Found'; exit; }
+    require __DIR__ . '/../../views/levels/create.php';
+} elseif (preg_match('#^/games/(\d+)/levels$#', $uri, $m) && $method === 'POST') {
+    (new LevelController())->webStore((int)$m[1], $_POST);
+} elseif (preg_match('#^/levels/(\d+)/edit$#', $uri, $m) && $method === 'GET') {
+    Auth::webRequireAdmin();
+    $level = R::load('level', (int)$m[1]);
+    if (!$level->id) { http_response_code(404); echo '404 Not Found'; exit; }
+    $game = R::load('game', $level->game_id);
+    require __DIR__ . '/../../views/levels/edit.php';
+} elseif (preg_match('#^/levels/(\d+)/update$#', $uri, $m) && $method === 'POST') {
+    (new LevelController())->webUpdate((int)$m[1], $_POST);
+} elseif (preg_match('#^/levels/(\d+)/delete$#', $uri, $m) && $method === 'POST') {
+    (new LevelController())->webDestroy((int)$m[1]);
 
-    $uri === '/logout' => $auth->webLogout(),
+// Achievements
+} elseif (preg_match('#^/games/(\d+)/achievements/create$#', $uri, $m) && $method === 'GET') {
+    Auth::webRequireAdmin();
+    $gameId = (int)$m[1];
+    $game = R::load('game', $gameId);
+    if (!$game->id) { http_response_code(404); echo '404 Not Found'; exit; }
+    require __DIR__ . '/../../views/achievements/create.php';
+} elseif (preg_match('#^/games/(\d+)/achievements$#', $uri, $m) && $method === 'POST') {
+    (new AchievementController())->webStore((int)$m[1], $_POST);
+} elseif (preg_match('#^/achievements/(\d+)/delete$#', $uri, $m) && $method === 'POST') {
+    (new AchievementController())->webDestroy((int)$m[1]);
 
-    $uri === '/dashboard' => (function () {
-            if (empty($_SESSION['user_id'])) {
-                header('Location: /login');
-                exit;
-            }
-            require __DIR__ . '/../../views/auth/dashboard.php';
-        })(),
+// Profile
+} elseif ($uri === '/profile' && $method === 'GET') {
+    Auth::webRequireAuth();
+    $userId = $_SESSION['user_id'];
+    $user = R::load('user', $userId);
+    $userGames = R::find('usergame', 'user_id = ?', [$userId]);
+    $gamesData = [];
+    foreach ($userGames as $ug) {
+        $entry = ['ug' => $ug, 'game' => null];
+        if ($ug->game_id) {
+            $entry['game'] = R::load('game', $ug->game_id);
+        }
+        $gamesData[] = $entry;
+    }
+    require __DIR__ . '/../../views/profile/index.php';
+} elseif ($uri === '/profile/games/add' && $method === 'GET') {
+    Auth::webRequireAuth();
+    $games = R::findAll('game');
+    $preselected = $_GET['game_id'] ?? null;
+    require __DIR__ . '/../../views/profile/add_game.php';
+} elseif ($uri === '/profile/games' && $method === 'POST') {
+    (new UserGameController())->webStore($_POST);
+} elseif (preg_match('#^/profile/games/(\d+)/edit$#', $uri, $m) && $method === 'GET') {
+    Auth::webRequireAuth();
+    $userGame = R::load('usergame', (int)$m[1]);
+    if (!$userGame->id || $userGame->user_id != $_SESSION['user_id']) {
+        http_response_code(404); echo '404 Not Found'; exit;
+    }
+    require __DIR__ . '/../../views/profile/edit_game.php';
+} elseif (preg_match('#^/profile/games/(\d+)/update$#', $uri, $m) && $method === 'POST') {
+    (new UserGameController())->webUpdate((int)$m[1], $_POST);
+} elseif (preg_match('#^/profile/games/(\d+)/delete$#', $uri, $m) && $method === 'POST') {
+    (new UserGameController())->webDestroy((int)$m[1]);
+} elseif ($uri === '/profile/achievements' && $method === 'GET') {
+    Auth::webRequireAuth();
+    $userId = $_SESSION['user_id'];
+    $userAchievements = R::find('userachievement', 'user_id = ?', [$userId]);
+    $achievementsData = [];
+    foreach ($userAchievements as $ua) {
+        $a = R::load('achievement', $ua->achievement_id);
+        $achievementsData[] = ['ua' => $ua, 'achievement' => $a];
+    }
+    require __DIR__ . '/../../views/profile/achievements.php';
+} elseif (preg_match('#^/profile/achievements/(\d+)/unlock$#', $uri, $m) && $method === 'POST') {
+    (new ProfileController())->webUnlockAchievement((int)$m[1]);
 
-    default => (function () {
-            http_response_code(404);
-            echo '404 Not Found';
-        })(),
-};
+// Admin
+} elseif ($uri === '/admin/users' && $method === 'GET') {
+    Auth::webRequireAdmin();
+    $users = R::findAll('user');
+    require __DIR__ . '/../../views/admin/users.php';
+} elseif (preg_match('#^/admin/users/(\d+)/role$#', $uri, $m) && $method === 'POST') {
+    (new AdminController())->webUpdateUser((int)$m[1], $_POST);
+} elseif (preg_match('#^/admin/users/(\d+)/delete$#', $uri, $m) && $method === 'POST') {
+    (new AdminController())->webDeleteUser((int)$m[1]);
+
+} else {
+    http_response_code(404);
+    echo '404 Not Found';
+}
