@@ -1,0 +1,32 @@
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Dependencies
+vendor/
+composer.lock
+
+# Logs
+*.log
+logs/
+var/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+.phpunit.cache/
+
+# Docker
+docker/data/
+.docker/
+
+# Cache
+.cache/
+tmp/
