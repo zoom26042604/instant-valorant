@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Connexion Valorant</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/public/assets/css/app.css" rel="stylesheet">
+    <link href="/assets/css/app.css" rel="stylesheet">
 </head>
 <body class="min-h-screen bg-valo-dark text-white flex items-center justify-center relative overflow-hidden">
 
