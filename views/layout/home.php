@@ -1,26 +1,211 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <title>Accueil — Instant-Valorant</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instant Valorant</title>
+    <link href="/public/assets/css/app.css" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest" defer></script>
 </head>
-<body>
-    <h1>Instant Valorant</h1>
-    <nav>
-        <a href="/games">Jeux</a> |
+
+<body class="bg-valo-dark text-white min-h-screen flex flex-col select-none">
+
+<nav class="border-b border-white/10 px-10 py-4 flex items-center justify-between sticky top-0 z-50 bg-valo-dark/95 backdrop-blur-sm">
+    <a href="/games" class="font-valo font-bold text-2xl tracking-[0.2em] cursor-pointer">
+        INSTANT<span class="text-valo-red font-valo">-VALORANT</span>
+    </a>
+
+    <div class="flex items-center gap-2 text-[11px] tracking-[0.15em] font-valo font-semibold text-white/50">
+        <span class="font-valo w-1.5 h-1.5 rounded-full bg-valo-red dot-pulse"></span>
+        KINGDOM CORP. · PROTOCOLE ACTIF
+    </div>
+
+    <div class="flex items-center gap-3">
         <?php if (!empty($_SESSION['user_id'])): ?>
-            <a href="/profile">Mon profil</a> |
+
+            <a href="/profile"
+               class="flex items-center gap-2 border border-white/20 px-5 py-2 text-[11px] tracking-[0.15em] font-valo font-semibold uppercase hover:border-white/50 hover:text-white transition-all duration-200 group">
+                <i data-lucide="user-round-search"
+                   class="w-4 h-4 text-white/60 group-hover:text-white transition-colors"></i>
+                Dossier Agent
+            </a>
+
             <?php if (!empty($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
-                <a href="/admin/users">Admin</a> |
+                <a href="/admin/users"
+                   class="flex items-center gap-2 border border-yellow-500/30 px-5 py-2 text-[11px] tracking-[0.15em] font-valo font-semibold uppercase hover:border-yellow-500/60 hover:text-yellow-400 transition-all duration-200 group">
+                    <i data-lucide="shield"
+                       class="w-4 h-4 text-yellow-500/60 group-hover:text-yellow-400 transition-colors"></i>
+                    Admin
+                </a>
             <?php endif; ?>
-            <a href="/logout">Déconnexion</a>
+
+            <a href="/logout"
+               class="flex items-center gap-2 border border-white/20 px-5 py-2 text-[11px] tracking-[0.15em] font-valo font-semibold uppercase hover:border-valo-red/60 hover:text-valo-red transition-all duration-200 group">
+                <i data-lucide="log-out"
+                   class="w-4 h-4 text-valo-red/60 group-hover:text-valo-red transition-colors"></i>
+                Quitter Protocole
+            </a>
+
         <?php else: ?>
-            <a href="/login">Connexion</a> |
-            <a href="/register">Inscription</a>
+
+            <a href="/login"
+               class="flex items-center gap-2 border border-white/20 px-5 py-2 text-[11px] tracking-[0.15em] font-valo font-semibold uppercase hover:border-white/50 hover:text-white transition-all duration-200 group">
+                <i data-lucide="log-in" class="w-4 h-4 text-white/60 group-hover:text-white transition-colors"></i>
+                Connexion
+            </a>
+
+            <a href="/register"
+               class="flex items-center gap-2 border border-valo-red/40 px-5 py-2 text-[11px] tracking-[0.15em] font-valo font-semibold uppercase hover:border-valo-red/80 hover:text-valo-red transition-all duration-200 group">
+                <i data-lucide="user-plus"
+                   class="w-4 h-4 text-valo-red/60 group-hover:text-valo-red transition-colors"></i>
+                Inscription
+            </a>
+
         <?php endif; ?>
-    </nav>
-    <hr>
-    <p>Bienvenue sur la plateforme. Consulte les <a href="/games">jeux disponibles</a> ou connecte-toi pour gérer ta bibliothèque.</p>
+    </div>
+</nav>
+
+<main class="flex-1 px-16 py-14">
+
+    <div class="mb-14">
+        <p class="text-valo-red text-[11px] font-valo font-semibold tracking-[0.25em] uppercase mb-3">
+            // ROYAUME VALORANT — ACCÈS AUTORISÉ
+        </p>
+        <h1 class="font-valo font-bold text-[3.2rem] tracking-[0.08em] leading-none mb-5">
+            BIENVENUE, <span class="text-valo-red">AGENT</span>
+        </h1>
+        <div class="flex items-center gap-6 text-[13px]">
+            <span class="flex items-center gap-2 text-white/60">
+                <span class="w-2 h-2 rounded-full bg-green-500 dot-pulse"></span>
+                247 agents déployés
+            </span>
+            <span class="flex items-center gap-2 text-white/60">
+                <span class="w-2 h-2 rounded-full bg-orange-400"></span>
+                12 cartes actives
+            </span>
+            <span class="flex items-center gap-2 text-white/60">
+                <span class="w-2 h-2 rounded-full bg-yellow-400"></span>
+                Saison Act III
+            </span>
+        </div>
+    </div>
+
+    <div class="flex items-center justify-between mb-1">
+        <h2 class="text-[11px] font-valo font-semibold tracking-[0.25em] text-white/40 uppercase">
+            Missions disponibles
+        </h2>
+        <a href="/games"
+           class="text-[11px] font-valo tracking-[0.15em] text-white/30 hover:text-valo-red transition-colors duration-200 uppercase">
+            Nos protocoles
+        </a>
+    </div>
+    <div class="border-t border-white/10 mb-6"></div>
+
+    <div class="grid grid-cols-5 gap-5">
+
+        <a href="/games?id=1"
+           class="group flex flex-col bg-black border border-yellow-500/20 hover:border-yellow-500/60 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg hover:shadow-yellow-500/20">
+            <div class="h-28 bg-black flex items-center justify-center relative overflow-hidden shrink-0">
+                <i data-lucide="swords"
+                   class="w-10 h-10 text-yellow-500/60 relative z-10 group-hover:scale-110 transition-transform duration-300"></i>
+                <span class="absolute top-2 right-2.5 text-xs text-yellow-500/40 font-valo tracking-wider">NEXUS //</span>
+            </div>
+            <div class="p-4 flex flex-col flex-1">
+                <span class="text-xs font-valo tracking-[0.2em] text-yellow-500/70 mb-1.5">MOBA</span>
+                <h3 class="text-sm font-valo mb-1.5 leading-tight">League of Legends</h3>
+                <p class="text-gray-600 text-xs leading-relaxed mb-4 flex-1">Détruisez le Nexus ennemi sur la
+                    Faille.</p>
+                <div class="flex items-center gap-1.5 text-xs pt-3 border-t border-white/5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-green-400 shrink-0 animate-pulse"></span>
+                    <span class="text-green-400/70">3 891 en ligne</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="/games?id=2"
+           class="group flex flex-col bg-black border border-valo-red/20 hover:border-valo-red/60 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg hover:shadow-valo-red/20">
+            <div class="h-28 bg-black flex items-center justify-center relative overflow-hidden shrink-0">
+                <i data-lucide="crosshair"
+                   class="w-10 h-10 text-valo-red/60 relative z-10 group-hover:scale-110 transition-transform duration-300"></i>
+                <span class="absolute top-2 right-2.5 text-xs text-valo-red/40 font-valo tracking-wider">SPIKE //</span>
+            </div>
+            <div class="p-4 flex flex-col flex-1">
+                <span class="text-xs font-valo uppercase tracking-[0.2em] text-valo-red/70 mb-1.5">FPS Tactique</span>
+                <h3 class="text-sm font-valo mb-1.5 leading-tight">Valorant</h3>
+                <p class="text-gray-600 text-xs leading-relaxed mb-4 flex-1">Plantez la Spike ou neutralisez-la.</p>
+                <div class="flex items-center gap-1.5 text-xs pt-3 border-t border-white/5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-green-400 shrink-0 animate-pulse"></span>
+                    <span class="text-green-400/70">1 234 en ligne</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="/games?id=3"
+           class="group flex flex-col bg-black border border-red-400/20 hover:border-red-400/60 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg hover:shadow-red-400/20">
+            <div class="h-28 bg-black flex items-center justify-center relative overflow-hidden shrink-0">
+                <i data-lucide="car"
+                   class="w-10 h-10 text-red-400/60 relative z-10 group-hover:scale-110 transition-transform duration-300"></i>
+                <span class="absolute top-2 right-2.5 text-xs text-red-400/40 font-valo tracking-wider">RACE //</span>
+            </div>
+            <div class="p-4 flex flex-col flex-1">
+                <span class="text-xs font-valo uppercase tracking-[0.2em] text-red-400/70 mb-1.5">Course</span>
+                <h3 class="text-sm font-valo mb-1.5 leading-tight">Mario Kart</h3>
+                <p class="text-gray-600 text-xs leading-relaxed mb-4 flex-1">Carapaces, bananes et podium.</p>
+                <div class="flex items-center gap-1.5 text-xs pt-3 border-t border-white/5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-green-400 shrink-0 animate-pulse"></span>
+                    <span class="text-green-400/70">612 en ligne</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="/games?id=4"
+           class="group flex flex-col bg-black border border-cyan-400/20 hover:border-cyan-400/60 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg hover:shadow-cyan-400/20">
+            <div class="h-28 bg-black flex items-center justify-center relative overflow-hidden shrink-0">
+                <i data-lucide="waves"
+                   class="w-10 h-10 text-cyan-400/60 relative z-10 group-hover:scale-110 transition-transform duration-300"></i>
+                <span class="absolute top-2 right-2.5 text-xs text-cyan-400/40 font-valo tracking-wider">PANDORA //</span>
+            </div>
+            <div class="p-4 flex flex-col flex-1">
+                <span class="text-xs font-valo uppercase tracking-[0.2em] text-cyan-400/70 mb-1.5">Aventure</span>
+                <h3 class="text-sm font-valo mb-1.5 leading-tight">Avatar</h3>
+                <p class="text-gray-600 text-xs leading-relaxed mb-4 flex-1">Explorez Pandora, maîtrisez les
+                    éléments.</p>
+                <div class="flex items-center gap-1.5 text-xs pt-3 border-t border-white/5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-green-400 shrink-0 animate-pulse"></span>
+                    <span class="text-green-400/70">874 en ligne</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="/games?id=5"
+           class="group flex flex-col bg-black border border-purple-400/20 hover:border-purple-400/60 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg hover:shadow-purple-400/20">
+            <div class="h-28 bg-black flex items-center justify-center relative overflow-hidden shrink-0">
+                <i data-lucide="flame"
+                   class="w-10 h-10 text-purple-400/60 relative z-10 group-hover:scale-110 transition-transform duration-300"></i>
+                <span class="absolute top-2 right-2.5 text-xs text-purple-400/40 font-valo tracking-wider">DOVAH //</span>
+            </div>
+            <div class="p-4 flex flex-col flex-1">
+                <span class="text-xs font-valo uppercase tracking-[0.2em] text-purple-400/70 mb-1.5">RPG</span>
+                <h3 class="text-sm font-valo mb-1.5 leading-tight">Skyrim</h3>
+                <p class="text-gray-600 text-xs leading-relaxed mb-4 flex-1">FUS RO DAH. Le Dovahkiin répond.</p>
+                <div class="flex items-center gap-1.5 text-xs pt-3 border-t border-white/5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-green-400 shrink-0 animate-pulse"></span>
+                    <span class="text-green-400/70">2 047 en ligne</span>
+                </div>
+            </div>
+        </a>
+
+    </div>
+</main>
+
+<footer class="border-t border-white/10 px-16 py-5 flex items-center justify-between">
+    <div class="font-valo font-bold text-lg tracking-[0.2em]">
+        INSTANT<span class="text-valo-red">-VALORANT</span>
+    </div>
+    <p class="text-white/25 text-xs tracking-wide">Ynov Campus · Made with ♥ by Nathan & Laurine.</p>
+</footer>
+
+<script src="/public/assets/js/index.js"></script>
+
 </body>
 </html>
