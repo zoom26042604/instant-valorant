@@ -89,7 +89,7 @@ class AuthController
         $_SESSION['user_email'] = $user->email;
         $_SESSION['user_role'] = 'user';
 
-        header('Location: /dashboard');
+        header('Location: /');
         exit;
     }
 
@@ -115,7 +115,7 @@ class AuthController
         $_SESSION['user_email'] = $user->email;
         $_SESSION['user_role'] = $user->role ?? 'user';
 
-        header('Location: /dashboard');
+        header('Location: /');
         exit;
     }
 

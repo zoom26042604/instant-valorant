@@ -1,70 +1,77 @@
 <!doctype html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <title>Connexion Valorant</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/assets/css/app.css" rel="stylesheet">
 </head>
+
 <body class="min-h-screen bg-valo-dark text-white flex items-center justify-center relative overflow-hidden">
 
-<div class="absolute inset-0 bg-gradient-to-br from-valo-dark via-black to-valo-red/20 pointer-events-none"></div>
-<div class="absolute top-0 left-0 w-full h-1 bg-valo-red"></div>
+    <div class="absolute inset-0 bg-gradient-to-br from-valo-dark via-black to-valo-red/20 pointer-events-none"></div>
+    <div class="absolute top-0 left-0 w-full h-1 bg-valo-red"></div>
 
-<div class="relative z-10 w-full max-w-5xl mx-6 py-12">
+    <div class="relative z-10 w-full max-w-5xl mx-6 py-12">
 
-    <div class="flex flex-col items-center mb-12">
-        <h1 class="text-4xl font-black tracking-[0.3em] uppercase">
-            INSTANT-<span class="text-valo-red">VALORANT</span>
-        </h1>
-        <p class="text-white text-xs tracking-widest mt-1 uppercase">Plateforme de jeux</p>
-    </div>
+        <div class="flex flex-col items-center mb-12">
+            <h1 class="text-4xl font-black tracking-[0.3em] uppercase">
+                INSTANT-<span class="text-valo-red">VALORANT</span>
+            </h1>
+            <p class="text-white text-xs tracking-widest mt-1 uppercase">Plateforme de jeux</p>
+        </div>
 
-    <div class="grid md:grid-cols-1 gap-6">
+        <div class="grid md:grid-cols-1 gap-6">
 
-        <div class="bg-valo-card border border-valo-red/30 rounded-xl p-8 shadow-2xl shadow-black/60 backdrop-blur-sm">
-            <div class="flex items-center gap-3 mb-8">
-                <div class="w-1 h-6 bg-valo-red rounded-full"></div>
-                <h2 class="text-xl font-bold tracking-widest uppercase">Connexion</h2>
+            <div
+                class="bg-valo-card border border-valo-red/30 rounded-xl p-8 shadow-2xl shadow-black/60 backdrop-blur-sm">
+                <div class="flex items-center gap-3 mb-8">
+                    <div class="w-1 h-6 bg-valo-red rounded-full"></div>
+                    <h2 class="text-xl font-bold tracking-widest uppercase">Connexion</h2>
+                </div>
+                <?php if (!empty($_SESSION['error'])): ?>
+                    <p><?= htmlspecialchars($_SESSION['error']) ?></p>
+                    <?php unset($_SESSION['error']); ?>
+                <?php endif; ?>
+                <form method="POST" action="/login">
+                    <div class="space-y-1">
+                        <label for="login_email"
+                            class="block text-xs font-semibold uppercase tracking-widest text-white">
+                            Adresse e-mail
+                        </label>
+                        <input type="email" id="login_email" name="email" required placeholder="agent@riotgames.com"
+                            class="w-full bg-black/50 border border-gray-700 hover:border-gray-500 focus:border-valo-red focus:ring-1 focus:ring-valo-red outline-none rounded px-4 py-2.5 text-sm transition-colors duration-150">
+                    </div>
+
+                    <div class="space-y-1">
+                        <label for="login_password"
+                            class="block text-xs font-semibold uppercase tracking-widest text-white">
+                            Mot de passe
+                        </label>
+                        <input type="password" id="login_password" name="password" required placeholder="••••••••"
+                            class="w-full bg-black/50 border border-gray-700 hover:border-gray-500 focus:border-valo-red focus:ring-1 focus:ring-valo-red outline-none rounded px-4 py-2.5 text-sm transition-colors duration-150">
+                    </div>
+
+                    <div class="flex items-center justify-between text-xs text-white pt-1">
+                        <label class="flex items-center gap-2 cursor-pointer select-none">
+                            <input type="checkbox" name="remember"
+                                class="w-3.5 h-3.5 rounded border-gray-600 bg-black/60">
+                            Se souvenir de moi
+                        </label>
+                        <a href="#" class="text-valo-red hover:text-white transition-colors duration-150">Mot de passe
+                            oublié ?</a>
+                    </div>
+
+                    <button type="submit" name="action" value="login"
+                        class="w-full bg-valo-red hover:bg-[#e63f4b] active:scale-95 transition-all duration-150 rounded py-2.5 text-sm font-bold tracking-[0.15em] uppercase mt-2 shadow-lg shadow-valo-red/30">
+                        Se connecter
+                    </button>
+                </form>
             </div>
-    <?php if (!empty($_SESSION['error'])): ?>
-        <p><?= htmlspecialchars($_SESSION['error']) ?></p>
-        <?php unset($_SESSION['error']); ?>
-    <?php endif; ?>
-    <form method="POST" action="/login">
-        <div class="space-y-1">
-            <label for="login_email" class="block text-xs font-semibold uppercase tracking-widest text-white">
-                Adresse e-mail
-            </label>
-            <input type="email" id="login_email" name="email" required placeholder="agent@riotgames.com"
-                   class="w-full bg-black/50 border border-gray-700 hover:border-gray-500 focus:border-valo-red focus:ring-1 focus:ring-valo-red outline-none rounded px-4 py-2.5 text-sm transition-colors duration-150">
         </div>
-
-        <div class="space-y-1">
-            <label for="login_password" class="block text-xs font-semibold uppercase tracking-widest text-white">
-                Mot de passe
-            </label>
-            <input type="password" id="login_password" name="password" required placeholder="••••••••"
-                   class="w-full bg-black/50 border border-gray-700 hover:border-gray-500 focus:border-valo-red focus:ring-1 focus:ring-valo-red outline-none rounded px-4 py-2.5 text-sm transition-colors duration-150">
-        </div>
-
-        <div class="flex items-center justify-between text-xs text-white pt-1">
-            <label class="flex items-center gap-2 cursor-pointer select-none">
-                <input type="checkbox" name="remember" class="w-3.5 h-3.5 rounded border-gray-600 bg-black/60">
-                Se souvenir de moi
-            </label>
-            <a href="#" class="text-valo-red hover:text-white transition-colors duration-150">Mot de passe oublié ?</a>
-        </div>
-
-        <button type="submit" name="action" value="login"
-                class="w-full bg-valo-red hover:bg-[#e63f4b] active:scale-95 transition-all duration-150 rounded py-2.5 text-sm font-bold tracking-[0.15em] uppercase mt-2 shadow-lg shadow-valo-red/30">
-            Se connecter
-        </button>
-    </form>
-        </div>
+        <p><a href="/register">Pas encore de compte ?</a></p>
     </div>
-    <p><a href="/register">Pas encore de compte ?</a></p>
-</div>
 </body>
-</html>
 
+</html>
