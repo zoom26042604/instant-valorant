@@ -1,5 +1,13 @@
 <?php
 
+// Let PHP's built-in server serve static files directly
+if (php_sapi_name() === 'cli-server') {
+    $file = __DIR__ . parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    if (is_file($file)) {
+        return false;
+    }
+}
+
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../src/rb-postgres.php';
 require_once __DIR__ . '/../config/database.php';

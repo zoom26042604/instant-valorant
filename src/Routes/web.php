@@ -11,8 +11,13 @@ use App\Helpers\Auth;
 
 $auth = new AuthController();
 
+// Favicon
+if ($uri === '/favicon.ico') {
+    header('Location: /assets/logo.webp', true, 301);
+    exit;
+
 // Auth
-if ($uri === '/' && $method === 'GET') {
+} elseif ($uri === '/' && $method === 'GET') {
     $featuredGames = R::findAll('game', 'ORDER BY id ASC LIMIT 5');
     require __DIR__ . '/../../views/layout/home.php';
 } elseif ($uri === '/login' && $method === 'GET') {
