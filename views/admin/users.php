@@ -1,47 +1,174 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Admin — Utilisateurs - Instant Valorant</title>
+    <title>Admin — Utilisateurs · Instant-Valorant</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/assets/css/app.css" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest" defer></script>
 </head>
-<body>
-    <nav>
-        <a href="/dashboard">Dashboard</a> |
-        <a href="/games">Jeux</a> |
-        <a href="/logout">Déconnexion</a>
-    </nav>
-    <hr>
-    <h1>Gestion des utilisateurs</h1>
-    <table border="1" cellpadding="5">
-        <tr>
-            <th>ID</th>
-            <th>Nom</th>
-            <th>Email</th>
-            <th>Rôle</th>
-            <th>Actions</th>
-        </tr>
-        <?php foreach ($users as $u): ?>
-            <tr>
-                <td><?= $u->id ?></td>
-                <td><?= htmlspecialchars($u->name) ?></td>
-                <td><?= htmlspecialchars($u->email) ?></td>
-                <td><?= htmlspecialchars($u->role ?? 'user') ?></td>
-                <td>
-                    <form style="display:inline" method="POST" action="/admin/users/<?= $u->id ?>/role">
-                        <select name="role">
-                            <option value="user" <?= ($u->role ?? 'user') === 'user' ? 'selected' : '' ?>>user</option>
-                            <option value="admin" <?= ($u->role ?? '') === 'admin' ? 'selected' : '' ?>>admin</option>
-                        </select>
-                        <button type="submit">Changer</button>
-                    </form>
-                    <?php if ($u->id != $_SESSION['user_id']): ?>
-                        | <form style="display:inline" method="POST" action="/admin/users/<?= $u->id ?>/delete" onsubmit="return confirm('Supprimer cet utilisateur ?')">
-                            <button type="submit">Supprimer</button>
-                          </form>
-                    <?php endif; ?>
-                </td>
+<body class="bg-valo-dark text-white min-h-screen flex flex-col select-none">
+
+<nav class="border-b border-white px-10 py-4 flex items-center justify-between sticky top-0 z-50 bg-valo-dark/95 backdrop-blur-sm">
+    <a href="/" class="font-valo font-bold text-2xl tracking-[0.2em] cursor-pointer">
+        INSTANT<span class="text-valo-red font-valo">-VALORANT</span>
+    </a>
+
+    <div class="flex items-center gap-2 text-[11px] tracking-[0.15em] font-valo font-semibold text-white">
+        <span class="w-1.5 h-1.5 rounded-full bg-valo-red dot-pulse"></span>
+        KINGDOM CORP. · ACCÈS ADMINISTRATEUR
+    </div>
+    <div class="flex items-center gap-3">
+        <a href="/dashboard"
+           class="flex items-center gap-2 border border-white px-5 py-2 text-[11px] tracking-[0.15em] font-valo font-semibold uppercase hover:border-white/50 hover:text-white transition-all duration-200 group">
+            <i data-lucide="user-round-search"
+               class="w-4 h-4 text-white group-hover:text-white transition-colors"></i>
+            Dashboard
+        </a>
+        <a href="/games"
+           class="flex items-center gap-2 border border-white px-5 py-2 text-[11px] tracking-[0.15em] font-valo font-semibold uppercase hover:border-white/50 hover:text-white transition-all duration-200 group">
+            <i data-lucide="layout-grid" class="w-4 h-4 text-white group-hover:text-white transition-colors"></i>
+            Missions
+        </a>
+        <a href="/logout"
+           class="flex items-center gap-2 border border-white px-5 py-2 text-[11px] tracking-[0.15em] font-valo font-semibold uppercase hover:border-valo-red/60 hover:text-valo-red transition-all duration-200 group">
+            <i data-lucide="log-out" class="w-4 h-4 text-valo-red/60 group-hover:text-valo-red transition-colors"></i>
+            Quitter Protocole
+        </a>
+    </div>
+</nav>
+
+<main class="flex-1 px-16 py-14">
+
+    <div class="mb-14">
+        <p class="text-[11px] text-valo-red font-valo font-semibold tracking-[0.25em] uppercase mb-3">
+            // PANNEAU DE CONTRÔLE — ACCÈS RESTREINT
+        </p>
+        <h1 class="font-valo font-bold text-[3.2rem] tracking-[0.08em] leading-none mb-5">
+            GESTION DES <span class="text-yellow-400">AGENTS</span>
+        </h1>
+
+        <div class="flex items-center gap-6 text-[13px]">
+            <span class="flex items-center gap-2 text-white">
+                <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+                <?= count($users) ?> agents enregistrés
+            </span>
+            <span class="flex items-center gap-2 text-white">
+                <span class="w-2 h-2 rounded-full bg-yellow-400"></span>
+                <?= count(array_filter($users, fn($u) => ($u->role ?? 'user') === 'admin')) ?> administrateurs
+            </span>
+            <span class="flex items-center gap-2 text-white">
+                <span class="w-2 h-2 rounded-full bg-white/30"></span>
+                <?= count(array_filter($users, fn($u) => ($u->role ?? 'user') === 'user')) ?> agents standard
+            </span>
+        </div>
+    </div>
+
+    <div class="flex items-center justify-between mb-1">
+        <h2 class="text-[11px] font-valo font-semibold tracking-[0.25em] text-white uppercase">
+            Registre des agents
+        </h2>
+        <span class="text-[11px] font-valo tracking-[0.15em] text-white uppercase">
+            Protocole Sécurisé · Niveau 5
+        </span>
+    </div>
+    <div class="border-t border-white/20 mb-6"></div>
+
+    <div class="border border-white/10 rounded-2xl overflow-hidden">
+        <table class="w-full text-sm">
+            <thead>
+            <tr class="border-b border-white/10 bg-white/4">
+                <th class="text-left px-5 py-3 text-[10px] font-valo tracking-[0.2em] text-white uppercase font-semibold">ID</th>
+                <th class="text-left px-5 py-3 text-[10px] font-valo tracking-[0.2em] text-white uppercase font-semibold">Agent</th>
+                <th class="text-left px-5 py-3 text-[10px] font-valo tracking-[0.2em] text-white uppercase font-semibold">Email</th>
+                <th class="text-left px-5 py-3 text-[10px] font-valo tracking-[0.2em] text-white uppercase font-semibold">Rang</th>
+                <th class="text-left px-5 py-3 text-[10px] font-valo tracking-[0.2em] text-white uppercase font-semibold">Actions</th>
             </tr>
-        <?php endforeach; ?>
-    </table>
+            </thead>
+            <tbody>
+            <?php foreach ($users as $u): ?>
+                <?php $isAdmin = ($u->role ?? 'user') === 'admin'; ?>
+                <tr class="border-b border-white/10 hover:bg-white/4 transition-colors duration-150 group">
+
+                    <td class="px-5 py-4 text-xs text-white font-mono">
+                        #<?= str_pad($u->id, 4, '0', STR_PAD_LEFT) ?>
+                    </td>
+
+                    <td class="px-5 py-4">
+                            <span class="flex items-center gap-2 font-valo text-sm tracking-wide">
+                                <i data-lucide="user-round" class="w-4 h-4 text-white shrink-0"></i>
+                                <?= htmlspecialchars($u->name) ?>
+                            </span>
+                    </td>
+
+                    <td class="px-5 py-4 text-xs text-white font-valo">
+                        <?= htmlspecialchars($u->email) ?>
+                    </td>
+
+                    <td class="px-5 py-4">
+                        <?php if ($isAdmin): ?>
+                            <span class="flex items-center gap-1.5 w-fit text-[11px] font-valo tracking-[0.15em] uppercase text-yellow-400/80 border border-yellow-500/30 px-2 py-0.5">
+                                    <i data-lucide="shield" class="w-3 h-3"></i>
+                                    Admin
+                                </span>
+                        <?php else: ?>
+                            <span class="flex items-center gap-1.5 w-fit text-[11px] font-valo tracking-[0.15em] uppercase text-white border border-white/10 px-2 py-0.5">
+                                    <i data-lucide="crosshair" class="w-3 h-3"></i>
+                                    Agent
+                                </span>
+                        <?php endif; ?>
+                    </td>
+
+                    <td class="px-5 py-4">
+                        <div class="flex items-center gap-2">
+
+                            <form method="POST" action="/admin/users/<?= $u->id ?>/role" class="flex items-center gap-1.5">
+                                <select name="role"
+                                        class="bg-white border border-white text-white text-[11px] font-valo tracking-[0.1em] uppercase px-2 py-1 rounded focus:outline-none focus:border-yellow-500/40 hover:border-white/20 transition-colors cursor-pointer">
+                                    <option value="user"  <?= !$isAdmin ? 'selected' : '' ?> class="bg-valo-dark">Agent</option>
+                                    <option value="admin" <?= $isAdmin  ? 'selected' : '' ?> class="bg-valo-dark">Admin</option>
+                                </select>
+                                <button type="submit"
+                                        class="flex items-center gap-1.5 text-[11px] font-valo tracking-[0.1em] uppercase text-yellow-500/50 hover:text-yellow-400 border border-yellow-500/20 hover:border-yellow-500/50 px-3 py-1 transition-all duration-150">
+                                    <i data-lucide="refresh-cw" class="w-3 h-3"></i>
+                                    Changer
+                                </button>
+                            </form>
+
+                            <?php if ($u->id != $_SESSION['user_id']): ?>
+                                <form method="POST" action="/admin/users/<?= $u->id ?>/delete"
+                                      onsubmit="return confirm('Supprimer l\'agent <?= htmlspecialchars($u->name) ?> ?')">
+                                    <button type="submit"
+                                            class="flex items-center gap-1.5 text-[11px] font-valo tracking-[0.1em] uppercase text-valo-red/50 hover:text-valo-red border border-valo-red/20 hover:border-valo-red/50 px-3 py-1 transition-all duration-150">
+                                        <i data-lucide="trash-2" class="w-3 h-3"></i>
+                                        Supprimer
+                                    </button>
+                                </form>
+                            <?php else: ?>
+                                <span class="text-[11px] font-valo tracking-[0.1em] uppercase text-white px-3 py-1 border border-white/5">
+                                        Vous
+                                    </span>
+                            <?php endif; ?>
+
+                        </div>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+
+</main>
+
+<footer class="border-t border-white px-16 py-5 flex items-center justify-between">
+    <div class="font-valo font-bold text-lg tracking-[0.2em]">
+        INSTANT<span class="text-valo-red">-VALORANT</span>
+    </div>
+    <p class="text-white text-xs tracking-wide">Ynov Campus · Made with ♥ by Nathan & Laurine.</p>
+</footer>
+
+<script src="/assets/js/index.js"></script>
 </body>
 </html>
+
+
