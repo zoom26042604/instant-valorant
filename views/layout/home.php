@@ -101,99 +101,55 @@
     </div>
     <div class="border-t border-white/10 mb-6"></div>
 
+    <?php
+    $themes = [
+        'League of Legends' => ['border' => 'border-yellow-500/20', 'hover' => 'hover:border-yellow-500/60', 'shadow' => 'hover:shadow-yellow-500/20', 'icon' => 'swords',     'iconColor' => 'text-yellow-500/60', 'tag' => 'text-yellow-500/40', 'label' => 'text-yellow-500/70', 'tagText' => 'NEXUS //'],
+        'Valorant'          => ['border' => 'border-valo-red/20',   'hover' => 'hover:border-valo-red/60',   'shadow' => 'hover:shadow-valo-red/20',   'icon' => 'crosshair', 'iconColor' => 'text-valo-red/60',   'tag' => 'text-valo-red/40',   'label' => 'text-valo-red/70',   'tagText' => 'SPIKE //'],
+        'Mario Kart'        => ['border' => 'border-red-400/20',    'hover' => 'hover:border-red-400/60',    'shadow' => 'hover:shadow-red-400/20',    'icon' => 'car',       'iconColor' => 'text-red-400/60',    'tag' => 'text-red-400/40',    'label' => 'text-red-400/70',    'tagText' => 'RACE //'],
+        'Avatar'            => ['border' => 'border-cyan-400/20',   'hover' => 'hover:border-cyan-400/60',   'shadow' => 'hover:shadow-cyan-400/20',   'icon' => 'waves',     'iconColor' => 'text-cyan-400/60',   'tag' => 'text-cyan-400/40',   'label' => 'text-cyan-400/70',   'tagText' => 'PANDORA //'],
+        'Skyrim'            => ['border' => 'border-purple-400/20', 'hover' => 'hover:border-purple-400/60', 'shadow' => 'hover:shadow-purple-400/20', 'icon' => 'flame',     'iconColor' => 'text-purple-400/60', 'tag' => 'text-purple-400/40', 'label' => 'text-purple-400/70', 'tagText' => 'DOVAH //'],
+    ];
+    $themeFallback = array_values($themes);
+    ?>
     <div class="grid grid-cols-5 gap-5">
 
-        <a href="/games?id=1"
-           class="group flex flex-col bg-black border border-yellow-500/20 hover:border-yellow-500/60 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg hover:shadow-yellow-500/20">
-            <div class="h-28 bg-black flex items-center justify-center relative overflow-hidden shrink-0">
-                <i data-lucide="swords"
-                   class="w-10 h-10 text-yellow-500/60 relative z-10 group-hover:scale-110 transition-transform duration-300"></i>
-                <span class="absolute top-2 right-2.5 text-xs text-yellow-500/40 font-valo tracking-wider">NEXUS //</span>
-            </div>
-            <div class="p-4 flex flex-col flex-1">
-                <span class="text-xs font-valo tracking-[0.2em] text-yellow-500/70 mb-1.5">MOBA</span>
-                <h3 class="text-sm font-valo mb-1.5 leading-tight">League of Legends</h3>
-                <p class="text-white text-xs leading-relaxed mb-4 flex-1">Détruisez le Nexus ennemi sur la
-                    Faille.</p>
-                <div class="flex items-center gap-1.5 text-xs pt-3 border-t border-white/5">
-                    <span class="w-1.5 h-1.5 rounded-full bg-green-400 shrink-0 animate-pulse"></span>
-                    <span class="text-green-400/70">3 891 en ligne</span>
+        <?php foreach ($featuredGames as $i => $game): ?>
+            <?php $t = $themes[$game->name] ?? $themeFallback[$i % count($themeFallback)]; ?>
+            <a href="/games/<?= $game->id ?>"
+               class="group flex flex-col bg-black border <?= $t['border'] ?> <?= $t['hover'] ?> rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg <?= $t['shadow'] ?>">
+                <div class="h-28 bg-black flex items-center justify-center relative overflow-hidden shrink-0">
+                    <?php if (!empty($game->image_url)): ?>
+                        <img src="<?= htmlspecialchars($game->image_url) ?>"
+                             alt="<?= htmlspecialchars($game->name) ?>"
+                             class="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-opacity duration-300">
+                    <?php else: ?>
+                        <i data-lucide="<?= $t['icon'] ?>"
+                           class="w-10 h-10 <?= $t['iconColor'] ?> relative z-10 group-hover:scale-110 transition-transform duration-300"></i>
+                        <span class="absolute top-2 right-2.5 text-xs <?= $t['tag'] ?> font-valo tracking-wider"><?= $t['tagText'] ?></span>
+                    <?php endif; ?>
                 </div>
-            </div>
-        </a>
+                <div class="p-4 flex flex-col flex-1">
+                    <?php if (!empty($game->type)): ?>
+                        <span class="text-xs font-valo tracking-[0.2em] <?= $t['label'] ?> mb-1.5 uppercase"><?= htmlspecialchars($game->type) ?></span>
+                    <?php endif; ?>
+                    <h3 class="text-sm font-valo mb-1.5 leading-tight"><?= htmlspecialchars($game->name) ?></h3>
+                    <p class="text-white text-xs leading-relaxed mb-4 flex-1">
+                        <?= !empty($game->description) ? htmlspecialchars(mb_strimwidth($game->description, 0, 70, '…')) : '' ?>
+                    </p>
+                    <div class="flex items-center gap-1.5 text-xs pt-3 border-t border-white/5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-green-400 shrink-0 animate-pulse"></span>
+                        <span class="text-green-400/70">Disponible</span>
+                    </div>
+                </div>
+            </a>
+        <?php endforeach; ?>
 
-        <a href="/games?id=2"
-           class="group flex flex-col bg-black border border-valo-red/20 hover:border-valo-red/60 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg hover:shadow-valo-red/20">
-            <div class="h-28 bg-black flex items-center justify-center relative overflow-hidden shrink-0">
-                <i data-lucide="crosshair"
-                   class="w-10 h-10 text-valo-red/60 relative z-10 group-hover:scale-110 transition-transform duration-300"></i>
-                <span class="absolute top-2 right-2.5 text-xs text-valo-red/40 font-valo tracking-wider">SPIKE //</span>
+        <?php if (empty($featuredGames)): ?>
+            <div class="col-span-5 flex flex-col items-center justify-center py-20 text-center">
+                <i data-lucide="gamepad-2" class="w-12 h-12 text-white/10 mb-4"></i>
+                <p class="text-white/30 text-sm font-valo tracking-[0.15em] uppercase">Aucune mission disponible</p>
             </div>
-            <div class="p-4 flex flex-col flex-1">
-                <span class="text-xs font-valo uppercase tracking-[0.2em] text-valo-red/70 mb-1.5">FPS Tactique</span>
-                <h3 class="text-sm font-valo mb-1.5 leading-tight">Valorant</h3>
-                <p class="text-white text-xs leading-relaxed mb-4 flex-1">Plantez la Spike ou neutralisez-la.</p>
-                <div class="flex items-center gap-1.5 text-xs pt-3 border-t border-white/5">
-                    <span class="w-1.5 h-1.5 rounded-full bg-green-400 shrink-0 animate-pulse"></span>
-                    <span class="text-green-400/70">1 234 en ligne</span>
-                </div>
-            </div>
-        </a>
-
-        <a href="/games?id=3"
-           class="group flex flex-col bg-black border border-red-400/20 hover:border-red-400/60 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg hover:shadow-red-400/20">
-            <div class="h-28 bg-black flex items-center justify-center relative overflow-hidden shrink-0">
-                <i data-lucide="car"
-                   class="w-10 h-10 text-red-400/60 relative z-10 group-hover:scale-110 transition-transform duration-300"></i>
-                <span class="absolute top-2 right-2.5 text-xs text-red-400/40 font-valo tracking-wider">RACE //</span>
-            </div>
-            <div class="p-4 flex flex-col flex-1">
-                <span class="text-xs font-valo uppercase tracking-[0.2em] text-red-400/70 mb-1.5">Course</span>
-                <h3 class="text-sm font-valo mb-1.5 leading-tight">Mario Kart</h3>
-                <p class="text-white text-xs leading-relaxed mb-4 flex-1">Carapaces, bananes et podium.</p>
-                <div class="flex items-center gap-1.5 text-xs pt-3 border-t border-white/5">
-                    <span class="w-1.5 h-1.5 rounded-full bg-green-400 shrink-0 animate-pulse"></span>
-                    <span class="text-green-400/70">612 en ligne</span>
-                </div>
-            </div>
-        </a>
-
-        <a href="/games?id=4"
-           class="group flex flex-col bg-black border border-cyan-400/20 hover:border-cyan-400/60 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg hover:shadow-cyan-400/20">
-            <div class="h-28 bg-black flex items-center justify-center relative overflow-hidden shrink-0">
-                <i data-lucide="waves"
-                   class="w-10 h-10 text-cyan-400/60 relative z-10 group-hover:scale-110 transition-transform duration-300"></i>
-                <span class="absolute top-2 right-2.5 text-xs text-cyan-400/40 font-valo tracking-wider">PANDORA //</span>
-            </div>
-            <div class="p-4 flex flex-col flex-1">
-                <span class="text-xs font-valo uppercase tracking-[0.2em] text-cyan-400/70 mb-1.5">Aventure</span>
-                <h3 class="text-sm font-valo mb-1.5 leading-tight">Avatar</h3>
-                <p class="text-white text-xs leading-relaxed mb-4 flex-1">Explorez Pandora, maîtrisez les
-                    éléments.</p>
-                <div class="flex items-center gap-1.5 text-xs pt-3 border-t border-white/5">
-                    <span class="w-1.5 h-1.5 rounded-full bg-green-400 shrink-0 animate-pulse"></span>
-                    <span class="text-green-400/70">874 en ligne</span>
-                </div>
-            </div>
-        </a>
-
-        <a href="/games?id=5"
-           class="group flex flex-col bg-black border border-purple-400/20 hover:border-purple-400/60 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg hover:shadow-purple-400/20">
-            <div class="h-28 bg-black flex items-center justify-center relative overflow-hidden shrink-0">
-                <i data-lucide="flame"
-                   class="w-10 h-10 text-purple-400/60 relative z-10 group-hover:scale-110 transition-transform duration-300"></i>
-                <span class="absolute top-2 right-2.5 text-xs text-purple-400/40 font-valo tracking-wider">DOVAH //</span>
-            </div>
-            <div class="p-4 flex flex-col flex-1">
-                <span class="text-xs font-valo uppercase tracking-[0.2em] text-purple-400/70 mb-1.5">RPG</span>
-                <h3 class="text-sm font-valo mb-1.5 leading-tight">Skyrim</h3>
-                <p class="text-white text-xs leading-relaxed mb-4 flex-1">FUS RO DAH. Le Dovahkiin répond.</p>
-                <div class="flex items-center gap-1.5 text-xs pt-3 border-t border-white/5">
-                    <span class="w-1.5 h-1.5 rounded-full bg-green-400 shrink-0 animate-pulse"></span>
-                    <span class="text-green-400/70">2 047 en ligne</span>
-                </div>
-            </div>
-        </a>
+        <?php endif; ?>
 
     </div>
 </main>

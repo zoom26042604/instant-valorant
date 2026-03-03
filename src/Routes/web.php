@@ -13,6 +13,7 @@ $auth = new AuthController();
 
 // Auth
 if ($uri === '/' && $method === 'GET') {
+    $featuredGames = R::findAll('game', 'ORDER BY id ASC LIMIT 5');
     require __DIR__ . '/../../views/layout/home.php';
 } elseif ($uri === '/login' && $method === 'GET') {
     require __DIR__ . '/../../views/auth/login.php';
@@ -43,6 +44,8 @@ if ($uri === '/' && $method === 'GET') {
     if (!$game->id) { http_response_code(404); echo '404 Not Found'; exit; }
     $levels = R::find('level', 'game_id = ?', [$gameId]);
     $achievements = R::find('achievement', 'game_id = ?', [$gameId]);
+    $userHasGame = !empty($_SESSION['user_id'])
+        && R::findOne('usergame', 'user_id = ? AND game_id = ?', [$_SESSION['user_id'], $gameId]);
     require __DIR__ . '/../../views/games/show.php';
 } elseif (preg_match('#^/games/(\d+)/edit$#', $uri, $m) && $method === 'GET') {
     Auth::webRequireAdmin();
@@ -126,8 +129,11 @@ if ($uri === '/' && $method === 'GET') {
     $userAchievements = R::find('userachievement', 'user_id = ?', [$userId]);
     $achievementsData = [];
     foreach ($userAchievements as $ua) {
-        $a = R::load('achievement', $ua->achievement_id);
-        $achievementsData[] = ['ua' => $ua, 'achievement' => $a];
+        if (empty($ua->achievement_id)) continue;
+        $a = R::load('achievement', (int)$ua->achievement_id);
+        if (!$a->id) continue;
+        $game = $a->game_id ? R::load('game', (int)$a->game_id) : null;
+        $achievementsData[] = ['ua' => $ua, 'achievement' => $a, 'game' => ($game && $game->id) ? $game : null];
     }
     require __DIR__ . '/../../views/profile/achievements.php';
 } elseif (preg_match('#^/profile/achievements/(\d+)/unlock$#', $uri, $m) && $method === 'POST') {

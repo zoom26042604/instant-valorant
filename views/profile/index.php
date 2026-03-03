@@ -33,8 +33,8 @@
         </a>
         <?php if (!empty($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
             <a href="/admin/users"
-               class="flex items-center gap-2 border border-white px-5 py-2 text-[11px] tracking-[0.15em] font-valo font-semibold uppercase hover:border-white/50 hover:text-white transition-all duration-200 group">
-                <i data-lucide="shield" class="w-4 h-4 text-white group-hover:text-white transition-colors"></i>
+               class="flex items-center gap-2 border border-yellow-500 px-5 py-2 text-[11px] tracking-[0.15em] font-valo font-semibold uppercase hover:border-yellow-500/60 hover:text-yellow-400 transition-all duration-200 group">
+                <i data-lucide="shield" class="w-4 h-4 text-yellow-500 group-hover:text-yellow-400 transition-colors"></i>
                 Admin
             </a>
         <?php endif; ?>
@@ -112,6 +112,20 @@
                 </tr>
                 </thead>
                 <tbody>
+                <?php
+                $moisFr = ['','janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+                function formatDateFrProfile(string $date, array $mois): string {
+                    $ts = strtotime($date);
+                    if (!$ts) return $date;
+                    return date('j', $ts) . ' ' . $mois[(int)date('n', $ts)] . ' ' . date('Y', $ts);
+                }
+                function formatPlaytime(int $minutes): string {
+                    if ($minutes < 60) return "{$minutes}min";
+                    $h = floor($minutes / 60);
+                    $m = $minutes % 60;
+                    return $m > 0 ? "{$h}h{$m}" : "{$h}h";
+                }
+                ?>
                 <?php foreach ($gamesData as $entry): ?>
                     <?php $ug = $entry['ug']; $game = $entry['game']; ?>
                     <tr class="border-b border-white/5 hover:bg-white/2 transition-colors duration-150 group">
@@ -135,12 +149,12 @@
                                 </span>
                         </td>
                         <td class="px-5 py-4 text-xs text-white/40 font-mono">
-                            <?= htmlspecialchars($ug->date_added ?? '-') ?>
+                            <?= !empty($ug->date_added) ? formatDateFrProfile($ug->date_added, $moisFr) : '-' ?>
                         </td>
                         <td class="px-5 py-4">
                                 <span class="flex items-center gap-1.5 text-xs text-white/50">
                                     <i data-lucide="timer" class="w-3.5 h-3.5 text-valo-red/40 shrink-0"></i>
-                                    <?= htmlspecialchars($ug->playtime ?? '-') ?> min
+                                    <?= isset($ug->playtime) ? formatPlaytime((int)$ug->playtime) : '-' ?>
                                 </span>
                         </td>
                         <td class="px-5 py-4">

@@ -102,6 +102,7 @@ class UserGameController
     {
         Auth::webRequireAuth();
         $userId = $_SESSION['user_id'];
+        $errorRedirect = !empty($data['_from']) ? $data['_from'] : '/profile/games/add';
 
         $ug = R::dispense('usergame');
         $ug->user_id = $userId;
@@ -112,19 +113,19 @@ class UserGameController
             $game = R::load('game', (int)$data['game_id']);
             if (!$game->id) {
                 $_SESSION['error'] = 'Jeu introuvable';
-                header('Location: /profile/games/add');
+                header('Location: ' . $errorRedirect);
                 exit;
             }
             if (R::findOne('usergame', 'user_id = ? AND game_id = ?', [$userId, $game->id])) {
                 $_SESSION['error'] = 'Ce jeu est déjà dans votre bibliothèque';
-                header('Location: /profile/games/add');
+                header('Location: ' . $errorRedirect);
                 exit;
             }
             $ug->game_id = $game->id;
         } else {
             if (empty($data['custom_name'])) {
                 $_SESSION['error'] = 'Le nom est obligatoire';
-                header('Location: /profile/games/add');
+                header('Location: ' . $errorRedirect);
                 exit;
             }
             $ug->game_id = null;
