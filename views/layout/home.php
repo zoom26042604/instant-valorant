@@ -10,12 +10,12 @@
 
 <body class="bg-valo-dark text-white min-h-screen flex flex-col select-none">
 
-<nav class="border-b border-white/10 px-10 py-4 flex items-center justify-between sticky top-0 z-50 bg-valo-dark/95 backdrop-blur-sm">
+<nav class="border-b border-white px-10 py-4 flex items-center justify-between sticky top-0 z-50 bg-valo-dark/95 backdrop-blur-sm">
     <a href="/" class="font-valo font-bold text-2xl tracking-[0.2em] cursor-pointer">
         INSTANT<span class="text-valo-red font-valo">-VALORANT</span>
     </a>
 
-    <div class="flex items-center gap-2 text-[11px] tracking-[0.15em] font-valo font-semibold text-white/50">
+    <div class="flex items-center gap-2 text-[11px] tracking-[0.15em] font-valo font-semibold text-white">
         <span class="font-valo w-1.5 h-1.5 rounded-full bg-valo-red dot-pulse"></span>
         KINGDOM CORP. · PROTOCOLE ACTIF
     </div>
@@ -24,32 +24,32 @@
         <?php if (!empty($_SESSION['user_id'])): ?>
 
             <a href="/profile"
-               class="flex items-center gap-2 border border-white/20 px-5 py-2 text-[11px] tracking-[0.15em] font-valo font-semibold uppercase hover:border-white/50 hover:text-white transition-all duration-200 group">
+               class="flex items-center gap-2 border border-white px-5 py-2 text-[11px] tracking-[0.15em] font-valo font-semibold uppercase hover:border-white/50 hover:text-white transition-all duration-200 group">
                 <i data-lucide="user-round-search"
-                   class="w-4 h-4 text-white/60 group-hover:text-white transition-colors"></i>
+                   class="w-4 h-4 text-white group-hover:text-white transition-colors"></i>
                 Dossier Agent
             </a>
 
             <?php if (!empty($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
                 <a href="/admin/users"
-                   class="flex items-center gap-2 border border-yellow-500/30 px-5 py-2 text-[11px] tracking-[0.15em] font-valo font-semibold uppercase hover:border-yellow-500/60 hover:text-yellow-400 transition-all duration-200 group">
+                   class="flex items-center gap-2 border border-yellow-500 px-5 py-2 text-[11px] tracking-[0.15em] font-valo font-semibold uppercase hover:border-yellow-500/60 hover:text-yellow-400 transition-all duration-200 group">
                     <i data-lucide="shield"
-                       class="w-4 h-4 text-yellow-500/60 group-hover:text-yellow-400 transition-colors"></i>
+                       class="w-4 h-4 text-yellow-500 group-hover:text-yellow-400 transition-colors"></i>
                     Admin
                 </a>
             <?php endif; ?>
 
             <a href="/logout"
-               class="flex items-center gap-2 border border-white/20 px-5 py-2 text-[11px] tracking-[0.15em] font-valo font-semibold uppercase hover:border-valo-red/60 hover:text-valo-red transition-all duration-200 group">
+               class="flex items-center gap-2 border border-white px-5 py-2 text-[11px] tracking-[0.15em] font-valo font-semibold uppercase hover:border-valo-red/60 hover:text-valo-red transition-all duration-200 group">
                 <i data-lucide="log-out"
-                   class="w-4 h-4 text-valo-red/60 group-hover:text-valo-red transition-colors"></i>
+                   class="w-4 h-4 text-valo-red group-hover:text-valo-red transition-colors"></i>
                 Quitter Protocole
             </a>
 
         <?php else: ?>
 
             <a href="/login"
-               class="flex items-center gap-2 border border-white/20 px-5 py-2 text-[11px] tracking-[0.15em] font-valo font-semibold uppercase hover:border-white/50 hover:text-white transition-all duration-200 group">
+               class="flex items-center gap-2 border border-white px-5 py-2 text-[11px] tracking-[0.15em] font-valo font-semibold uppercase hover:border-white/50 hover:text-white transition-all duration-200 group">
                 <i data-lucide="log-in" class="w-4 h-4 text-white/60 group-hover:text-white transition-colors"></i>
                 Connexion
             </a>
@@ -75,15 +75,15 @@
             BIENVENUE, <span class="text-valo-red">AGENT</span>
         </h1>
         <div class="flex items-center gap-6 text-[13px]">
-            <span class="flex items-center gap-2 text-white/60">
+            <span class="flex items-center gap-2 text-white">
                 <span class="w-2 h-2 rounded-full bg-green-500 dot-pulse"></span>
                 247 agents déployés
             </span>
-            <span class="flex items-center gap-2 text-white/60">
+            <span class="flex items-center gap-2 text-white">
                 <span class="w-2 h-2 rounded-full bg-orange-400"></span>
                 12 cartes actives
             </span>
-            <span class="flex items-center gap-2 text-white/60">
+            <span class="flex items-center gap-2 text-white">
                 <span class="w-2 h-2 rounded-full bg-yellow-400"></span>
                 Saison Act III
             </span>
@@ -91,11 +91,11 @@
     </div>
 
     <div class="flex items-center justify-between mb-1">
-        <h2 class="text-[11px] font-valo font-semibold tracking-[0.25em] text-white/40 uppercase">
+        <h2 class="text-[11px] font-valo font-semibold tracking-[0.25em] text-white uppercase">
             Missions disponibles
         </h2>
         <a href="/games"
-           class="text-[11px] font-valo tracking-[0.15em] text-white/30 hover:text-valo-red transition-colors duration-200 uppercase">
+           class="text-[11px] font-valo tracking-[0.15em] text-white hover:text-valo-red transition-colors duration-200 uppercase">
             Nos protocoles
         </a>
     </div>
@@ -113,7 +113,7 @@
             <div class="p-4 flex flex-col flex-1">
                 <span class="text-xs font-valo tracking-[0.2em] text-yellow-500/70 mb-1.5">MOBA</span>
                 <h3 class="text-sm font-valo mb-1.5 leading-tight">League of Legends</h3>
-                <p class="text-gray-600 text-xs leading-relaxed mb-4 flex-1">Détruisez le Nexus ennemi sur la
+                <p class="text-white text-xs leading-relaxed mb-4 flex-1">Détruisez le Nexus ennemi sur la
                     Faille.</p>
                 <div class="flex items-center gap-1.5 text-xs pt-3 border-t border-white/5">
                     <span class="w-1.5 h-1.5 rounded-full bg-green-400 shrink-0 animate-pulse"></span>
@@ -132,7 +132,7 @@
             <div class="p-4 flex flex-col flex-1">
                 <span class="text-xs font-valo uppercase tracking-[0.2em] text-valo-red/70 mb-1.5">FPS Tactique</span>
                 <h3 class="text-sm font-valo mb-1.5 leading-tight">Valorant</h3>
-                <p class="text-gray-600 text-xs leading-relaxed mb-4 flex-1">Plantez la Spike ou neutralisez-la.</p>
+                <p class="text-white text-xs leading-relaxed mb-4 flex-1">Plantez la Spike ou neutralisez-la.</p>
                 <div class="flex items-center gap-1.5 text-xs pt-3 border-t border-white/5">
                     <span class="w-1.5 h-1.5 rounded-full bg-green-400 shrink-0 animate-pulse"></span>
                     <span class="text-green-400/70">1 234 en ligne</span>
@@ -150,7 +150,7 @@
             <div class="p-4 flex flex-col flex-1">
                 <span class="text-xs font-valo uppercase tracking-[0.2em] text-red-400/70 mb-1.5">Course</span>
                 <h3 class="text-sm font-valo mb-1.5 leading-tight">Mario Kart</h3>
-                <p class="text-gray-600 text-xs leading-relaxed mb-4 flex-1">Carapaces, bananes et podium.</p>
+                <p class="text-white text-xs leading-relaxed mb-4 flex-1">Carapaces, bananes et podium.</p>
                 <div class="flex items-center gap-1.5 text-xs pt-3 border-t border-white/5">
                     <span class="w-1.5 h-1.5 rounded-full bg-green-400 shrink-0 animate-pulse"></span>
                     <span class="text-green-400/70">612 en ligne</span>
@@ -168,7 +168,7 @@
             <div class="p-4 flex flex-col flex-1">
                 <span class="text-xs font-valo uppercase tracking-[0.2em] text-cyan-400/70 mb-1.5">Aventure</span>
                 <h3 class="text-sm font-valo mb-1.5 leading-tight">Avatar</h3>
-                <p class="text-gray-600 text-xs leading-relaxed mb-4 flex-1">Explorez Pandora, maîtrisez les
+                <p class="text-white text-xs leading-relaxed mb-4 flex-1">Explorez Pandora, maîtrisez les
                     éléments.</p>
                 <div class="flex items-center gap-1.5 text-xs pt-3 border-t border-white/5">
                     <span class="w-1.5 h-1.5 rounded-full bg-green-400 shrink-0 animate-pulse"></span>
@@ -187,7 +187,7 @@
             <div class="p-4 flex flex-col flex-1">
                 <span class="text-xs font-valo uppercase tracking-[0.2em] text-purple-400/70 mb-1.5">RPG</span>
                 <h3 class="text-sm font-valo mb-1.5 leading-tight">Skyrim</h3>
-                <p class="text-gray-600 text-xs leading-relaxed mb-4 flex-1">FUS RO DAH. Le Dovahkiin répond.</p>
+                <p class="text-white text-xs leading-relaxed mb-4 flex-1">FUS RO DAH. Le Dovahkiin répond.</p>
                 <div class="flex items-center gap-1.5 text-xs pt-3 border-t border-white/5">
                     <span class="w-1.5 h-1.5 rounded-full bg-green-400 shrink-0 animate-pulse"></span>
                     <span class="text-green-400/70">2 047 en ligne</span>
@@ -198,11 +198,11 @@
     </div>
 </main>
 
-<footer class="border-t border-white/10 px-16 py-5 flex items-center justify-between">
+<footer class="border-t border-white px-16 py-5 flex items-center justify-between">
     <div class="font-valo font-bold text-lg tracking-[0.2em]">
         INSTANT<span class="text-valo-red">-VALORANT</span>
     </div>
-    <p class="text-white/25 text-xs tracking-wide">Ynov Campus · Made with ♥ by Nathan & Laurine.</p>
+    <p class="text-white text-xs tracking-wide">Ynov Campus · Made with ♥ by Nathan & Laurine.</p>
 </footer>
 
 <script src="/assets/js/index.js"></script>
