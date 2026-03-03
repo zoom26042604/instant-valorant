@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <title>Accueil — Instant-Valorant</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/public/assets/css/app.css" rel="stylesheet">
+    <link href="/assets/css/app.css" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest" defer></script>
 </head>
 
 <body class="bg-valo-dark text-white min-h-screen flex flex-col select-none">
 
 <nav class="border-b border-white/10 px-10 py-4 flex items-center justify-between sticky top-0 z-50 bg-valo-dark/95 backdrop-blur-sm">
-    <a href="/games" class="font-valo font-bold text-2xl tracking-[0.2em] cursor-pointer">
+    <a href="/" class="font-valo font-bold text-2xl tracking-[0.2em] cursor-pointer">
         INSTANT<span class="text-valo-red font-valo">-VALORANT</span>
     </a>
 
@@ -205,7 +205,7 @@
     <p class="text-white/25 text-xs tracking-wide">Ynov Campus · Made with ♥ by Nathan & Laurine.</p>
 </footer>
 
-<script src="/public/assets/js/index.js"></script>
+<script src="/assets/js/index.js"></script>
 
 </body>
 </html>
