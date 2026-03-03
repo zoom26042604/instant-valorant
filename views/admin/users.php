@@ -19,12 +19,6 @@
         KINGDOM CORP. · ACCÈS ADMINISTRATEUR
     </div>
     <div class="flex items-center gap-3">
-        <a href="/dashboard"
-           class="flex items-center gap-2 border border-white px-5 py-2 text-[11px] tracking-[0.15em] font-valo font-semibold uppercase hover:border-white/50 hover:text-white transition-all duration-200 group">
-            <i data-lucide="user-round-search"
-               class="w-4 h-4 text-white group-hover:text-white transition-colors"></i>
-            Dashboard
-        </a>
         <a href="/games"
            class="flex items-center gap-2 border border-white px-5 py-2 text-[11px] tracking-[0.15em] font-valo font-semibold uppercase hover:border-white/50 hover:text-white transition-all duration-200 group">
             <i data-lucide="layout-grid" class="w-4 h-4 text-white group-hover:text-white transition-colors"></i>
