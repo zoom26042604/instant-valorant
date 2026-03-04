@@ -94,7 +94,13 @@ if ($uri === '/favicon.ico') {
         $gamesData[] = $entry;
     }
     $totalGames = count($gamesData);
-    $totalAchievements = R::count('userachievement', 'user_id = ?', [$userId]);
+    $rawAchievements = R::find('userachievement', 'user_id = ?', [$userId]);
+    $totalAchievements = 0;
+    foreach ($rawAchievements as $ua) {
+        if (empty($ua->achievement_id)) continue;
+        $a = R::load('achievement', (int)$ua->achievement_id);
+        if ($a->id) $totalAchievements++;
+    }
     require __DIR__ . '/../../views/profile/index.php';
 } elseif ($uri === '/profile/agent' && $method === 'POST') {
     Auth::webRequireAuth();
