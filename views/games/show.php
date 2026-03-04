@@ -72,6 +72,7 @@
     <!-- ═══ HERO BANNER ═══ -->
     <div class="relative w-full overflow-hidden" style="min-height: 420px;">
 
+
         <!-- Fond : image ou dégradé -->
         <?php if (!empty($game->image_url)): ?>
             <div class="absolute inset-0">
@@ -106,6 +107,10 @@
         <!-- Contenu hero -->
         <div class="relative z-10 flex flex-col justify-end h-full px-6 sm:px-12 md:px-16 py-10 md:py-14"
              style="min-height: 420px;">
+            <a href="/" class="flex items-center gap-2 text-[11px] tracking-[0.15em] font-valo font-semibold uppercase hover:text-valo-red transition-colors duration-150">
+                <i data-lucide="arrow-big-left" class="w-6 h-6 text-white mb-2 hover:text-valo-red cursor-pointer"></i>
+                Retour au site
+            </a>
 
             <p class="text-valo-red text-[10px] sm:text-[11px] font-valo font-semibold tracking-[0.3em] uppercase mb-4">
                 // FICHE PROTOCOLE<?php if (!empty($game->type)): ?> — <?= htmlspecialchars(strtoupper($game->type)) ?><?php endif; ?>

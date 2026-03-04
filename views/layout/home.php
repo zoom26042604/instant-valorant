@@ -98,7 +98,7 @@
         </h2>
         <a href="/games"
            class="text-[11px] font-valo tracking-[0.15em] text-white hover:text-valo-red transition-colors duration-200 uppercase">
-            Nos protocoles
+            Voir plus de nos protocoles
         </a>
     </div>
     <div class="border-t border-white/10 mb-6"></div>

@@ -5,6 +5,8 @@
     <title>Inscription Valorant</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/assets/css/app.css" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+
 </head>
 <body class="min-h-screen bg-valo-dark text-white flex items-center justify-center relative overflow-hidden">
 
@@ -21,6 +23,10 @@
     </div>
 
     <div class="grid md:grid-cols-1 gap-6">
+        <a href="/" class="flex items-center gap-2 text-[11px] tracking-[0.15em] font-valo font-semibold uppercase hover:text-valo-red transition-colors duration-150">
+            <i data-lucide="arrow-big-left" class="w-6 h-6 text-white mb-2 hover:text-valo-red cursor-pointer"></i>
+            Retour au site
+        </a>
         <div class="bg-valo-card border border-gray-700/60 rounded-xl p-8 shadow-2xl shadow-black/60 backdrop-blur-sm">
             <div class="flex items-center gap-3 mb-8">
                 <div class="w-1 h-6 bg-gray-500 rounded-full"></div>
@@ -79,4 +85,7 @@
         <p><a href="/login">Déjà un compte ?</a></p>
     </div>
 </div>
+<script src="/assets/js/index.js"></script>
+
 </body>
+</html>

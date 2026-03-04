@@ -49,11 +49,15 @@
 <main class="flex-1 px-16 py-14">
 
     <div class="mb-14">
+        <a href="/" class="flex items-center gap-2 text-[11px] tracking-[0.15em] font-valo font-semibold uppercase hover:text-valo-red transition-colors duration-150">
+            <i data-lucide="arrow-big-left" class="w-6 h-6 text-white mb-2 hover:text-valo-red cursor-pointer"></i>
+            Retour au site
+        </a>
         <p class="text-valo-red text-[11px] font-valo font-semibold tracking-[0.25em] uppercase mb-3">
             // DOSSIER AGENT — ACCÈS RESTREINT
         </p>
-        <div class="flex items-end gap-8">
-            <div class="w-20 h-20 rounded-2xl border border-white bg-white flex items-center justify-center shrink-0">
+        <div class="flex items-end">
+            <div class="w-20 h-20 rounded-2xl items-center justify-center shrink-0">
                 <i data-lucide="user-round" class="w-10 h-10 text-white"></i>
             </div>
             <div>
