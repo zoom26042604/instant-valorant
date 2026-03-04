@@ -48,6 +48,17 @@
 
 <main class="flex-1 px-16 py-14">
 
+    <?php
+    $agentsList = ['astra','breach','brimstone','chamber','clove','cypher','deadlock','fade','gekko','harbor','iso','jett','kayo','killjoy','neon','omen','phoenix','raze','reyna','sage','skye','sova','tejo','veto','viper','vyse','waylay','yoru'];
+    $currentAgent = $user->agent ?? null;
+    function formatPlaytimeHeader(int $minutes): string {
+        if ($minutes < 60) return "{$minutes}min";
+        $h = floor($minutes / 60);
+        $m = $minutes % 60;
+        return $m > 0 ? "{$h}h{$m}" : "{$h}h";
+    }
+    ?>
+
     <div class="mb-14">
         <a href="javascript:history.back()" class="flex items-center gap-2 text-[11px] tracking-[0.15em] font-valo font-semibold uppercase hover:text-valo-red transition-colors duration-150">
             <i data-lucide="arrow-big-left" class="w-6 h-6 text-white mb-2 hover:text-valo-red cursor-pointer"></i>
@@ -56,23 +67,102 @@
         <p class="text-valo-red text-[11px] font-valo font-semibold tracking-[0.25em] uppercase mb-3">
             // DOSSIER AGENT — ACCÈS RESTREINT
         </p>
-        <div class="flex items-end">
-            <div class="w-20 h-20 rounded-2xl items-center justify-center shrink-0">
-                <i data-lucide="user-round" class="w-10 h-10 text-white"></i>
+
+        <div class="flex items-start gap-8">
+            <div class="shrink-0 cursor-pointer group relative" onclick="document.getElementById('agentModal').classList.remove('hidden')">
+                <?php if ($currentAgent): ?>
+                    <img src="/assets/agent/<?= htmlspecialchars($currentAgent) ?>.webp"
+                         alt="<?= htmlspecialchars($currentAgent) ?>"
+                         class="object-cover rounded-2xl border border-white/10 group-hover:border-valo-red/40 transition-colors duration-200"
+                         style="width: 170px; height: 240px;">
+                <?php else: ?>
+                    <div class="rounded-2xl border border-white/10 group-hover:border-valo-red/40 transition-colors duration-200 flex items-center justify-center bg-white/5"
+                         style="width: 140px; height: 240px;">
+                        <i data-lucide="user-round" class="w-10 h-10 text-white/40"></i>
+                    </div>
+                <?php endif; ?>
+                <div class="absolute inset-0 rounded-2xl bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
+                    <i data-lucide="pencil" class="w-6 h-6 text-white"></i>
+                </div>
             </div>
-            <div>
-                <h1 class="font-valo font-bold text-[3rem] tracking-[0.08em] leading-none mb-2">
-                    <?= htmlspecialchars($user->name) ?>
-                </h1>
-                <div class="flex items-center gap-6 text-[13px]">
-                    <span class="flex items-center gap-2 text-white/">
-                        <i data-lucide="mail" class="w-3.5 h-3.5 text-white"></i>
-                        <?= htmlspecialchars($user->email) ?>
-                    </span>
-                    <span class="flex items-center gap-1.5 text-valo-red text-[11px] font-valo tracking-[0.15em] uppercase border border-valo-red/30 px-2 py-0.5">
-                        <i data-lucide="crosshair" class="w-3 h-3"></i>
-                        <?= htmlspecialchars($user->role ?? 'user') ?>
-                    </span>
+
+            <div class="flex flex-col gap-4 flex-1">
+                <div>
+                    <h1 class="font-valo font-bold text-[3rem] tracking-[0.08em] leading-none mb-2">
+                        <?= htmlspecialchars($user->name) ?>
+                    </h1>
+                    <div class="flex items-center gap-6 text-[13px]">
+                        <span class="flex items-center gap-2 text-white/60">
+                            <i data-lucide="mail" class="w-3.5 h-3.5 text-white/40"></i>
+                            <?= htmlspecialchars($user->email) ?>
+                        </span>
+                        <span class="flex items-center gap-1.5 text-valo-red text-[11px] font-valo tracking-[0.15em] uppercase border border-valo-red/30 px-2 py-0.5">
+                            <i data-lucide="crosshair" class="w-3 h-3"></i>
+                            <?= htmlspecialchars($user->role ?? 'user') ?>
+                        </span>
+                        <?php if ($currentAgent): ?>
+                            <span class="flex items-center gap-1.5 text-white/40 text-[11px] font-valo tracking-[0.15em] uppercase border border-white/10 px-2 py-0.5">
+                                <i data-lucide="shield" class="w-3 h-3"></i>
+                                <?= htmlspecialchars(strtoupper($currentAgent)) ?>
+                            </span>
+                        <?php endif; ?>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-8">
+                    <div class="flex flex-col gap-0.5">
+                        <span class="text-[10px] font-valo tracking-[0.2em] text-white/30 uppercase">Temps de jeu</span>
+                        <span class="text-2xl font-valo font-bold tracking-wide text-white">
+                            <?= formatPlaytimeHeader((int)($totalPlaytime ?? 0)) ?>
+                        </span>
+                    </div>
+                    <div class="w-px h-10 bg-white/10"></div>
+                    <div class="flex flex-col gap-0.5">
+                        <span class="text-[10px] font-valo tracking-[0.2em] text-white/30 uppercase">Jeux</span>
+                        <span class="text-2xl font-valo font-bold tracking-wide text-white">
+                            <?= (int)($totalGames ?? 0) ?>
+                        </span>
+                    </div>
+                    <div class="w-px h-10 bg-white/10"></div>
+                    <div class="flex flex-col gap-0.5">
+                        <span class="text-[10px] font-valo tracking-[0.2em] text-white/30 uppercase">Succès</span>
+                        <span class="text-2xl font-valo font-bold tracking-wide text-valo-red">
+                            <?= (int)($totalAchievements ?? 0) ?>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="agentModal" class="hidden flex fixed inset-0 z-50 items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" onclick="document.getElementById('agentModal').classList.add('hidden')"></div>
+        <div class="relative w-full max-w-4xl bg-valo-dark border border-white/20 rounded-2xl shadow-2xl">
+            <div class="flex items-center justify-between px-6 py-4 border-b border-white/10">
+                <p class="text-[10px] font-valo tracking-[0.25em] uppercase text-valo-red">// Choisir un agent</p>
+                <button type="button" onclick="document.getElementById('agentModal').classList.add('hidden')"
+                        class="text-white/30 hover:text-white transition-colors">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <div class="p-6 overflow-y-auto" style="max-height: 70vh;">
+                <div class="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-7 gap-3">
+                    <?php foreach ($agentsList as $agent): ?>
+                        <form method="POST" action="/profile/agent">
+                            <input type="hidden" name="agent" value="<?= $agent ?>">
+                            <button type="submit" class="group w-full flex flex-col items-center gap-1 focus:outline-none">
+                                <div class="w-full rounded-xl overflow-hidden border <?= $currentAgent === $agent ? 'border-valo-red ring-1 ring-valo-red' : 'border-white/10 group-hover:border-valo-red/50' ?> transition-colors duration-150" style="aspect-ratio: 3/4;">
+                                    <img src="/assets/agent/<?= $agent ?>.webp"
+                                         alt="<?= htmlspecialchars(strtoupper($agent)) ?>"
+                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200">
+                                </div>
+                                <span class="text-[8px] font-valo tracking-widest uppercase <?= $currentAgent === $agent ? 'text-valo-red' : 'text-white/30 group-hover:text-white' ?> transition-colors">
+                                    <?= htmlspecialchars(strtoupper($agent)) ?>
+                                </span>
+                            </button>
+                        </form>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>
@@ -165,7 +255,7 @@
                             <div class="flex items-center gap-2">
                                 <?php if (!$game): ?>
                                     <a href="/profile/games/<?= $ug->id ?>/edit"
-                                       class="flex items-center gap-1.5 text-[11px] font-valo tracking-[0.1em] uppercase text-white/40 hover:text-white border border-white/10 hover:border-white/30 px-3 py-1 transition-all duration-150">
+                                       class="flex items-center gap-1.5 text-[11px] font-valo tracking-widest uppercase text-white/40 hover:text-white border border-white/10 hover:border-white/30 px-3 py-1 transition-all duration-150">
                                         <i data-lucide="pencil" class="w-3 h-3"></i>
                                         Modifier
                                     </a>
@@ -173,7 +263,7 @@
                                 <form method="POST" action="/profile/games/<?= $ug->id ?>/delete"
                                       onsubmit="return confirm('Retirer ce jeu ?')">
                                     <button type="submit"
-                                            class="flex items-center gap-1.5 text-[11px] font-valo tracking-[0.1em] uppercase text-valo-red/50 hover:text-valo-red border border-valo-red/20 hover:border-valo-red/50 px-3 py-1 transition-all duration-150">
+                                            class="flex items-center gap-1.5 text-[11px] font-valo tracking-widest uppercase text-valo-red/50 hover:text-valo-red border border-valo-red/20 hover:border-valo-red/50 px-3 py-1 transition-all duration-150">
                                         <i data-lucide="trash-2" class="w-3 h-3"></i>
                                         Retirer
                                     </button>
@@ -196,6 +286,11 @@
     <p class="text-white text-xs tracking-wide">Ynov Campus · Made with ♥ by Nathan & Laurine.</p>
 </footer>
 
+<script>
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') document.getElementById('agentModal').classList.add('hidden');
+    });
+</script>
 <script src="/assets/js/index.js"></script>
 
 </body>

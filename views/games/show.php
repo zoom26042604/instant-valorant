@@ -131,10 +131,6 @@
                             </span>
                         <?php endif; ?>
                         <span class="flex items-center gap-1.5 text-white/50 text-[10px] sm:text-[11px] font-valo tracking-[0.15em] uppercase border border-white/15 px-3 py-1">
-                            <i data-lucide="layers" class="w-3 h-3"></i>
-                            <?= count($levels) ?> niveau<?= count($levels) > 1 ? 'x' : '' ?>
-                        </span>
-                        <span class="flex items-center gap-1.5 text-white/50 text-[10px] sm:text-[11px] font-valo tracking-[0.15em] uppercase border border-white/15 px-3 py-1">
                             <i data-lucide="trophy" class="w-3 h-3"></i>
                             <?= count($achievements) ?> succès
                         </span>
@@ -200,80 +196,7 @@
     <!-- ═══ CONTENU ═══ -->
     <div class="flex-1 px-6 sm:px-12 md:px-16 py-10 md:py-14">
 
-    <!-- Niveaux & Succès en 2 colonnes -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
-
-        <!-- Niveaux -->
-        <div>
-            <div class="flex items-center justify-between mb-1">
-                <h2 class="text-[11px] font-valo font-semibold tracking-[0.25em] text-white uppercase">Niveaux</h2>
-                <?php if (!empty($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
-                    <a href="/games/<?= $game->id ?>/levels/create"
-                       class="flex items-center gap-2 border border-yellow-500/40 px-3 py-1 text-[10px] tracking-[0.15em] font-valo font-semibold uppercase hover:border-yellow-500/80 hover:text-yellow-400 transition-all duration-200 group">
-                        <i data-lucide="plus" class="w-3 h-3 text-yellow-500 group-hover:text-yellow-400 transition-colors"></i>
-                        Ajouter
-                    </a>
-                <?php endif; ?>
-            </div>
-            <div class="border-t border-white/10 mb-6"></div>
-
-            <?php if (empty($levels)): ?>
-                <div class="flex flex-col items-center justify-center py-12 text-center">
-                    <i data-lucide="layers" class="w-10 h-10 text-white/10 mb-3"></i>
-                    <p class="text-white/20 text-sm font-valo tracking-[0.15em] uppercase">Aucun niveau</p>
-                </div>
-            <?php else: ?>
-                <div class="border border-white/5 rounded-2xl overflow-hidden">
-                    <table class="w-full text-sm">
-                        <thead>
-                        <tr class="border-b border-white/5 bg-white/2">
-                            <th class="text-left px-5 py-3 text-[10px] font-valo tracking-[0.2em] text-white uppercase font-semibold">Nom</th>
-                            <th class="text-left px-5 py-3 text-[10px] font-valo tracking-[0.2em] text-white uppercase font-semibold">Description</th>
-                            <?php if (!empty($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
-                                <th class="text-left px-5 py-3 text-[10px] font-valo tracking-[0.2em] text-white uppercase font-semibold">Actions</th>
-                            <?php endif; ?>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <?php foreach ($levels as $level): ?>
-                            <tr class="border-b border-white/5 hover:bg-white/2 transition-colors duration-150 group">
-                                <td class="px-5 py-4">
-                                    <span class="flex items-center gap-2 font-valo text-sm tracking-wide">
-                                        <i data-lucide="layers" class="w-4 h-4 text-valo-red/30 shrink-0"></i>
-                                        <?= htmlspecialchars($level->name) ?>
-                                    </span>
-                                </td>
-                                <td class="px-5 py-4 text-xs text-white/40">
-                                    <?= htmlspecialchars($level->description ?? '—') ?>
-                                </td>
-                                <?php if (!empty($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
-                                    <td class="px-5 py-4">
-                                        <div class="flex items-center gap-2">
-                                            <a href="/levels/<?= $level->id ?>/edit"
-                                               class="flex items-center gap-1.5 text-[11px] font-valo tracking-[0.1em] uppercase text-white/40 hover:text-white border border-white/10 hover:border-white/30 px-3 py-1 transition-all duration-150">
-                                                <i data-lucide="pencil" class="w-3 h-3"></i>
-                                                Modifier
-                                            </a>
-                                            <form method="POST" action="/levels/<?= $level->id ?>/delete"
-                                                  onsubmit="return confirm('Supprimer ?')">
-                                                <button type="submit"
-                                                        class="flex items-center gap-1.5 text-[11px] font-valo tracking-[0.1em] uppercase text-valo-red/50 hover:text-valo-red border border-valo-red/20 hover:border-valo-red/50 px-3 py-1 transition-all duration-150">
-                                                    <i data-lucide="trash-2" class="w-3 h-3"></i>
-                                                    Supprimer
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                <?php endif; ?>
-                            </tr>
-                        <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
-            <?php endif; ?>
-        </div>
-
-        <!-- Succès -->
+    <!-- Succès -->
         <div>
             <div class="flex items-center justify-between mb-1">
                 <h2 class="text-[11px] font-valo font-semibold tracking-[0.25em] text-white uppercase">Succès</h2>
@@ -343,8 +266,6 @@
                     </table>
                 </div>
             <?php endif; ?>
-        </div>
-
     </div>
 
     </div><!-- /contenu -->
