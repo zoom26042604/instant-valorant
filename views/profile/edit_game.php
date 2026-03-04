@@ -42,10 +42,10 @@
 <main class="flex-1 flex items-center justify-center px-6 py-14">
     <div class="w-full max-w-md">
 
-        <a href="/profile"
+        <a href="javascript:history.back()"
            class="inline-flex items-center gap-2 text-[11px] font-valo tracking-[0.15em] uppercase text-white/40 hover:text-white transition-colors duration-150 mb-8">
             <i data-lucide="arrow-big-left" class="w-3.5 h-3.5"></i>
-            Retour au dossier agent
+            RETOUR
         </a>
 
         <div class="flex items-center gap-3 mb-8">

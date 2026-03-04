@@ -49,10 +49,10 @@
 
     <!-- En-tête -->
     <div class="mb-10">
-        <a href="/profile"
+        <a href="javascript:history.back()"
            class="inline-flex items-center gap-2 text-[11px] font-valo tracking-[0.15em] uppercase text-white/30 hover:text-white transition-colors duration-150 mb-6">
             <i data-lucide="arrow-big-left" class="w-3.5 h-3.5"></i>
-            Retour au dossier agent
+            RETOUR
         </a>
         <p class="text-valo-red text-[11px] font-valo font-semibold tracking-[0.25em] uppercase mb-3">
             // BIBLIOTHÈQUE AGENT

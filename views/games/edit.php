@@ -61,10 +61,10 @@
 
         <!-- Retour -->
         <div class="relative z-10">
-            <a href="/games/<?= $game->id ?>"
+            <a href="javascript:history.back()"
                class="inline-flex items-center gap-2 leading-none text-[11px] font-valo tracking-[0.15em] uppercase text-white/30 hover:text-white transition-colors duration-150">
                 <i data-lucide="arrow-big-left" class="w-3.5 h-3.5 shrink-0"></i>
-                Retour à la fiche
+                RETOUR
             </a>
         </div>
 

@@ -23,9 +23,9 @@
     </div>
 
     <div class="grid md:grid-cols-1 gap-6">
-        <a href="/" class="flex items-center gap-2 text-[11px] tracking-[0.15em] font-valo font-semibold uppercase hover:text-valo-red transition-colors duration-150">
+        <a href="javascript:history.back()" class="flex items-center gap-2 text-[11px] tracking-[0.15em] font-valo font-semibold uppercase hover:text-valo-red transition-colors duration-150">
             <i data-lucide="arrow-big-left" class="w-6 h-6 text-white mb-2 hover:text-valo-red cursor-pointer"></i>
-            Retour au site
+            RETOUR
         </a>
         <div class="bg-valo-card border border-gray-700/60 rounded-xl p-8 shadow-2xl shadow-black/60 backdrop-blur-sm">
             <div class="flex items-center gap-3 mb-8">
