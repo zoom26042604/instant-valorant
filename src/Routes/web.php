@@ -63,25 +63,7 @@ if ($uri === '/favicon.ico') {
 } elseif (preg_match('#^/games/(\d+)/delete$#', $uri, $m) && $method === 'POST') {
     (new GameController())->webDestroy((int)$m[1]);
 
-// Levels
-} elseif (preg_match('#^/games/(\d+)/levels/create$#', $uri, $m) && $method === 'GET') {
-    Auth::webRequireAdmin();
-    $gameId = (int)$m[1];
-    $game = R::load('game', $gameId);
-    if (!$game->id) { http_response_code(404); echo '404 Not Found'; exit; }
-    require __DIR__ . '/../../views/levels/create.php';
-} elseif (preg_match('#^/games/(\d+)/levels$#', $uri, $m) && $method === 'POST') {
-    (new LevelController())->webStore((int)$m[1], $_POST);
-} elseif (preg_match('#^/levels/(\d+)/edit$#', $uri, $m) && $method === 'GET') {
-    Auth::webRequireAdmin();
-    $level = R::load('level', (int)$m[1]);
-    if (!$level->id) { http_response_code(404); echo '404 Not Found'; exit; }
-    $game = R::load('game', $level->game_id);
-    require __DIR__ . '/../../views/levels/edit.php';
-} elseif (preg_match('#^/levels/(\d+)/update$#', $uri, $m) && $method === 'POST') {
-    (new LevelController())->webUpdate((int)$m[1], $_POST);
-} elseif (preg_match('#^/levels/(\d+)/delete$#', $uri, $m) && $method === 'POST') {
-    (new LevelController())->webDestroy((int)$m[1]);
+// Levels - DISABLED
 
 // Achievements
 } elseif (preg_match('#^/games/(\d+)/achievements/create$#', $uri, $m) && $method === 'GET') {
