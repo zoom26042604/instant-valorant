@@ -68,6 +68,7 @@ class GameController
             echo json_encode(['error' => 'Game not found']);
             return;
         }
+        $this->cascadeDeleteGame($id);
         R::trash($game);
         echo json_encode(['message' => 'Game deleted']);
     }
@@ -76,25 +77,38 @@ class GameController
     {
         Auth::requireAdmin();
         $games = [
-            ['name' => 'League of Legends', 'type' => 'MOBA', 'description' => 'Battle your enemies on the Summoner\'s Rift in intense 5v5 matches.'],
-            ['name' => 'Valorant', 'type' => 'FPS', 'description' => 'A tactical 5v5 character-based shooter set in a near-future world.'],
-            ['name' => 'Mario Kart', 'type' => 'Racing', 'description' => 'Race with iconic Nintendo characters across wild and creative tracks.'],
-            ['name' => 'Avatar: Frontiers of Pandora', 'type' => 'Action-Adventure', 'description' => 'Explore the world of Pandora and fight to protect your home.'],
-            ['name' => 'Skyrim', 'type' => 'RPG', 'description' => 'Embark on an epic journey across the province of Skyrim as the Dragonborn.'],
+            ['name' => 'League of Legends', 'type' => 'MOBA', 'description' => 'Affronte tes ennemis sur la Faille de l\'Invocateur en équipes de 5.'],
+            ['name' => 'Valorant', 'type' => 'Tir tactique', 'description' => 'Shooter tactique 5v5 avec des agents aux capacités uniques.'],
+            ['name' => 'Mario Kart', 'type' => 'Course', 'description' => 'Course avec les personnages iconiques Nintendo sur des circuits délirants.'],
+            ['name' => 'Avatar: Frontiers of Pandora', 'type' => 'Action-Aventure', 'description' => 'Explore Pandora et combats pour protéger ta terre natale.'],
+            ['name' => 'Skyrim', 'type' => 'Jeu de rôle', 'description' => 'Incarne le Dovahkiin et explore la province de Bordeciel.'],
         ];
-        $count = 0;
+        $gamesCount = 0;
+        $achCount = 0;
         foreach ($games as $g) {
-            if (!R::findOne('game', 'name = ?', [$g['name']])) {
+            $existing = R::findOne('game', 'name = ?', [$g['name']]);
+            if (!$existing) {
                 $game = R::dispense('game');
                 $game->name = $g['name'];
                 $game->type = $g['type'];
                 $game->description = $g['description'];
                 $game->image_url = null;
                 R::store($game);
-                $count++;
+                $gameId = $game->id;
+                $gamesCount++;
+            } else {
+                $gameId = $existing->id;
+            }
+            if (!R::findOne('achievement', 'game_id = ? AND name = ?', [$gameId, 'Débutant'])) {
+                $a = R::dispense('achievement');
+                $a->game_id = $gameId;
+                $a->name = 'Débutant';
+                $a->description = 'Premier pas sur ' . $g['name'] . ' — ajoute ce jeu à ta bibliothèque.';
+                R::store($a);
+                $achCount++;
             }
         }
-        echo json_encode(['message' => "$count games seeded"]);
+        echo json_encode(['message' => "$gamesCount jeux et $achCount succès ajoutés"]);
     }
 
     public function webStore(array $data): void
@@ -138,9 +152,19 @@ class GameController
         Auth::webRequireAdmin();
         $game = R::load('game', $id);
         if ($game->id) {
+            $this->cascadeDeleteGame($id);
             R::trash($game);
         }
         header('Location: /games');
         exit;
+    }
+
+    private function cascadeDeleteGame(int $gameId): void
+    {
+        $achievements = R::find('achievement', 'game_id = ?', [$gameId]);
+        foreach ($achievements as $achievement) {
+            R::exec('DELETE FROM userachievement WHERE achievement_id = ?', [$achievement->id]);
+            R::trash($achievement);
+        }
     }
 }

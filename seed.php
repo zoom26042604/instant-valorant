@@ -29,11 +29,11 @@ if (!$admin) {
 
 // 5 games
 $games = [
-    ['name' => 'League of Legends', 'type' => 'MOBA', 'description' => 'Affronte tes ennemis sur la Faille de l\'Invocateur en equipes de 5.'],
-    ['name' => 'Valorant', 'type' => 'FPS', 'description' => 'Shooter tactique 5v5 avec des agents aux capacites uniques.'],
-    ['name' => 'Mario Kart', 'type' => 'Racing', 'description' => 'Course avec les personnages iconiques Nintendo sur des circuits delirants.'],
-    ['name' => 'Avatar: Frontiers of Pandora', 'type' => 'Action-Adventure', 'description' => 'Explore Pandora et combats pour proteger ta terre natale.'],
-    ['name' => 'Skyrim', 'type' => 'RPG', 'description' => 'Incarne le Dovahkiin et explore la province de Bordeciel.'],
+    ['name' => 'League of Legends', 'type' => 'MOBA', 'description' => 'Affronte tes ennemis sur la Faille de l\'Invocateur en équipes de 5.'],
+    ['name' => 'Valorant', 'type' => 'Tir tactique', 'description' => 'Shooter tactique 5v5 avec des agents aux capacités uniques.'],
+    ['name' => 'Mario Kart', 'type' => 'Course', 'description' => 'Course avec les personnages iconiques Nintendo sur des circuits délirants.'],
+    ['name' => 'Avatar: Frontiers of Pandora', 'type' => 'Action-Aventure', 'description' => 'Explore Pandora et combats pour protéger ta terre natale.'],
+    ['name' => 'Skyrim', 'type' => 'Jeu de rôle', 'description' => 'Incarne le Dovahkiin et explore la province de Bordeciel.'],
 ];
 
 foreach ($games as $g) {
