@@ -1,0 +1,6 @@
+@import "../../../node_modules/tailwindcss/dist/lib.d.mts";
+
+@theme {
+    --color-primary: #6246ea;
+    --font-sans: 'Inter', sans-serif;
+}

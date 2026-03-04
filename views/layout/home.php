@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Accueil — Instant-Valorant</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/webp" href="/assets/logo.webp">
+    <link rel="shortcut icon" href="/assets/logo.webp">
+    <link href="/assets/css/app.css" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+</head>
+
+<body class="bg-valo-dark text-white min-h-screen flex flex-col select-none">
+
+<nav class="border-b border-white px-10 py-4 flex items-center justify-between sticky top-0 z-50 bg-valo-dark/95 backdrop-blur-sm">
+    <a href="/" class="font-valo font-bold text-2xl tracking-[0.2em] cursor-pointer">
+        INSTANT<span class="text-valo-red font-valo">-VALORANT</span>
+    </a>
+
+    <div class="flex items-center gap-2 text-[11px] tracking-[0.15em] font-valo font-semibold text-white">
+        <span class="font-valo w-1.5 h-1.5 rounded-full bg-valo-red dot-pulse"></span>
+        KINGDOM CORP. · PROTOCOLE ACTIF
+    </div>
+
+    <div class="flex items-center gap-3">
+        <?php if (!empty($_SESSION['user_id'])): ?>
+
+            <a href="/profile"
+               class="flex items-center gap-2 border border-white px-5 py-2 text-[11px] tracking-[0.15em] font-valo font-semibold uppercase hover:border-white/50 hover:text-white transition-all duration-200 group">
+                <i data-lucide="user-round-search"
+                   class="w-4 h-4 text-white group-hover:text-white transition-colors"></i>
+                Dossier Agent
+            </a>
+
+            <?php if (!empty($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
+                <a href="/admin"
+                   class="flex items-center gap-2 border border-yellow-500 px-5 py-2 text-[11px] tracking-[0.15em] font-valo font-semibold uppercase hover:border-yellow-500/60 hover:text-yellow-400 transition-all duration-200 group">
+                    <i data-lucide="shield"
+                       class="w-4 h-4 text-yellow-500 group-hover:text-yellow-400 transition-colors"></i>
+                    Admin
+                </a>
+            <?php endif; ?>
+
+            <a href="/logout"
+               class="flex items-center gap-2 border border-white px-5 py-2 text-[11px] tracking-[0.15em] font-valo font-semibold uppercase hover:border-valo-red/60 hover:text-valo-red transition-all duration-200 group">
+                <i data-lucide="log-out"
+                   class="w-4 h-4 text-valo-red group-hover:text-valo-red transition-colors"></i>
+                Quitter Protocole
+            </a>
+
+        <?php else: ?>
+
+            <a href="/login"
+               class="flex items-center gap-2 border border-white px-5 py-2 text-[11px] tracking-[0.15em] font-valo font-semibold uppercase hover:border-white/50 hover:text-white transition-all duration-200 group">
+                <i data-lucide="log-in" class="w-4 h-4 text-white/60 group-hover:text-white transition-colors"></i>
+                Connexion
+            </a>
+
+            <a href="/register"
+               class="flex items-center gap-2 border border-valo-red/40 px-5 py-2 text-[11px] tracking-[0.15em] font-valo font-semibold uppercase hover:border-valo-red/80 hover:text-valo-red transition-all duration-200 group">
+                <i data-lucide="user-plus"
+                   class="w-4 h-4 text-valo-red/60 group-hover:text-valo-red transition-colors"></i>
+                Inscription
+            </a>
+
+        <?php endif; ?>
+    </div>
+</nav>
+
+<main class="flex-1 px-16 py-14">
+
+    <div class="mb-14">
+        <p class="text-valo-red text-[11px] font-valo font-semibold tracking-[0.25em] uppercase mb-3">
+            // ROYAUME VALORANT — ACCÈS AUTORISÉ
+        </p>
+        <h1 class="font-valo font-bold text-[3.2rem] tracking-[0.08em] leading-none mb-5">
+            BIENVENUE, <span class="text-valo-red">AGENT</span>
+        </h1>
+        <div class="flex items-center gap-6 text-[13px]">
+            <span class="flex items-center gap-2 text-white">
+                <span class="w-2 h-2 rounded-full bg-green-500 dot-pulse"></span>
+                247 agents déployés
+            </span>
+            <span class="flex items-center gap-2 text-white">
+                <span class="w-2 h-2 rounded-full bg-orange-400"></span>
+                12 cartes actives
+            </span>
+            <span class="flex items-center gap-2 text-white">
+                <span class="w-2 h-2 rounded-full bg-yellow-400"></span>
+                Saison Act III
+            </span>
+        </div>
+    </div>
+
+    <div class="flex items-center justify-between mb-1">
+        <h2 class="text-[11px] font-valo font-semibold tracking-[0.25em] text-white uppercase">
+            Missions disponibles
+        </h2>
+        <a href="/games"
+           class="text-[11px] font-valo tracking-[0.15em] text-white hover:text-valo-red transition-colors duration-200 uppercase">
+            Voir plus de nos protocoles
+        </a>
+    </div>
+    <div class="border-t border-white/10 mb-6"></div>
+
+    <?php
+    $themes = [
+        'League of Legends' => ['border' => 'border-yellow-500/20', 'hover' => 'hover:border-yellow-500/60', 'shadow' => 'hover:shadow-yellow-500/20', 'icon' => 'swords',     'iconColor' => 'text-yellow-500/60', 'tag' => 'text-yellow-500/40', 'label' => 'text-yellow-500/70', 'tagText' => 'NEXUS //'],
+        'Valorant'          => ['border' => 'border-valo-red/20',   'hover' => 'hover:border-valo-red/60',   'shadow' => 'hover:shadow-valo-red/20',   'icon' => 'crosshair', 'iconColor' => 'text-valo-red/60',   'tag' => 'text-valo-red/40',   'label' => 'text-valo-red/70',   'tagText' => 'SPIKE //'],
+        'Mario Kart'        => ['border' => 'border-red-400/20',    'hover' => 'hover:border-red-400/60',    'shadow' => 'hover:shadow-red-400/20',    'icon' => 'car',       'iconColor' => 'text-red-400/60',    'tag' => 'text-red-400/40',    'label' => 'text-red-400/70',    'tagText' => 'RACE //'],
+        'Avatar: Frontiers of Pandora' => ['border' => 'border-cyan-400/20',   'hover' => 'hover:border-cyan-400/60',   'shadow' => 'hover:shadow-cyan-400/20',   'icon' => 'waves',     'iconColor' => 'text-cyan-400/60',   'tag' => 'text-cyan-400/40',   'label' => 'text-cyan-400/70',   'tagText' => 'PANDORA //'],
+        'Skyrim'            => ['border' => 'border-purple-400/20', 'hover' => 'hover:border-purple-400/60', 'shadow' => 'hover:shadow-purple-400/20', 'icon' => 'flame',     'iconColor' => 'text-purple-400/60', 'tag' => 'text-purple-400/40', 'label' => 'text-purple-400/70', 'tagText' => 'DOVAH //'],
+    ];
+    $themeFallback = array_values($themes);
+    ?>
+    <div class="grid grid-cols-5 gap-5">
+
+        <?php foreach ($featuredGames as $i => $game): ?>
+            <?php $t = $themes[$game->name] ?? $themeFallback[$i % count($themeFallback)]; ?>
+            <a href="/games/<?= $game->id ?>"
+               class="group flex flex-col bg-black border <?= $t['border'] ?> <?= $t['hover'] ?> rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg <?= $t['shadow'] ?>">
+                <div class="h-28 bg-black flex items-center justify-center relative overflow-hidden shrink-0">
+                    <?php if (!empty($game->image_url)): ?>
+                        <img src="<?= htmlspecialchars($game->image_url) ?>"
+                             alt="<?= htmlspecialchars($game->name) ?>"
+                             class="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-opacity duration-300">
+                    <?php else: ?>
+                        <i data-lucide="<?= $t['icon'] ?>"
+                           class="w-10 h-10 <?= $t['iconColor'] ?> relative z-10 group-hover:scale-110 transition-transform duration-300"></i>
+                        <span class="absolute top-2 right-2.5 text-xs <?= $t['tag'] ?> font-valo tracking-wider"><?= $t['tagText'] ?></span>
+                    <?php endif; ?>
+                </div>
+                <div class="p-4 flex flex-col flex-1">
+                    <?php if (!empty($game->type)): ?>
+                        <span class="text-xs font-valo tracking-[0.2em] <?= $t['label'] ?> mb-1.5 uppercase"><?= htmlspecialchars($game->type) ?></span>
+                    <?php endif; ?>
+                    <h3 class="text-sm font-valo mb-1.5 leading-tight"><?= htmlspecialchars($game->name) ?></h3>
+                    <p class="text-white text-xs leading-relaxed mb-4 flex-1">
+                        <?= !empty($game->description) ? htmlspecialchars(mb_strimwidth($game->description, 0, 70, '…')) : '' ?>
+                    </p>
+                    <div class="flex items-center gap-1.5 text-xs pt-3 border-t border-white/5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-green-400 shrink-0 animate-pulse"></span>
+                        <span class="text-green-400/70">Disponible</span>
+                    </div>
+                </div>
+            </a>
+        <?php endforeach; ?>
+
+        <?php if (empty($featuredGames)): ?>
+            <div class="col-span-5 flex flex-col items-center justify-center py-20 text-center">
+                <i data-lucide="gamepad-2" class="w-12 h-12 text-white/10 mb-4"></i>
+                <p class="text-white/30 text-sm font-valo tracking-[0.15em] uppercase">Aucune mission disponible</p>
+            </div>
+        <?php endif; ?>
+
+    </div>
+</main>
+
+<footer class="border-t border-white px-16 py-5 flex items-center justify-between">
+    <div class="font-valo font-bold text-lg tracking-[0.2em]">
+        INSTANT<span class="text-valo-red">-VALORANT</span>
+    </div>
+    <p class="text-white text-xs tracking-wide">Ynov Campus · Made with ♥ by Nathan & Laurine.</p>
+</footer>
+
+<script src="/assets/js/index.js"></script>
+
+</body>
+</html>

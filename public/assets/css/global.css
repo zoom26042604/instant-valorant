@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+@font-face {
+    font-family: 'Valorant';
+    src: url('../fonts/valorant.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@theme {
+    --color-valo-red: #bd3944;
+    --color-valo-dark: #000000;
+    --color-valo-card: #111823;
+
+    --font-valo: 'Valorant', sans-serif;
+}
