@@ -27,6 +27,11 @@ class AchievementController
             echo json_encode(['error' => 'Name is required']);
             return;
         }
+        if (R::findOne('achievement', 'game_id = ? AND name = ?', [$gameId, $data['name']])) {
+            http_response_code(409);
+            echo json_encode(['error' => 'Achievement already exists for this game']);
+            return;
+        }
         $achievement = R::dispense('achievement');
         $achievement->game_id = $gameId;
         $achievement->name = $data['name'];
@@ -54,6 +59,11 @@ class AchievementController
         Auth::webRequireAdmin();
         if (empty($data['name'])) {
             $_SESSION['error'] = 'Name is required';
+            header("Location: /games/$gameId/achievements/create");
+            exit;
+        }
+        if (R::findOne('achievement', 'game_id = ? AND name = ?', [$gameId, $data['name']])) {
+            $_SESSION['error'] = 'Ce succès existe déjà pour ce jeu';
             header("Location: /games/$gameId/achievements/create");
             exit;
         }

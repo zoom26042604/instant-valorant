@@ -25,7 +25,7 @@
             Fiche jeu
         </a>
         <?php if (!empty($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
-            <a href="/admin/users"
+            <a href="/admin"
                class="flex items-center gap-2 border border-yellow-500 px-5 py-2 text-[11px] tracking-[0.15em] font-valo font-semibold uppercase hover:border-yellow-500/60 hover:text-yellow-400 transition-all duration-200 group">
                 <i data-lucide="shield" class="w-4 h-4 text-yellow-500 group-hover:text-yellow-400 transition-colors"></i>
                 Admin
@@ -43,8 +43,8 @@
     <div class="w-full max-w-md">
 
         <a href="/games/<?= $game->id ?>"
-           class="inline-flex items-center gap-2 text-[11px] font-valo tracking-[0.15em] uppercase text-white/40 hover:text-white transition-colors duration-150 mb-8">
-            <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+           class="inline-flex items-center gap-2 leading-none text-[11px] font-valo tracking-[0.15em] uppercase text-white/40 hover:text-white transition-colors duration-150 mb-8">
+            <i data-lucide="arrow-big-left" class="w-3.5 h-3.5 shrink-0"></i>
             Retour à la fiche
         </a>
 
