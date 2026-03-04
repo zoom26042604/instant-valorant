@@ -39,7 +39,7 @@
                        class="block text-xs font-semibold uppercase tracking-widest text-white">
                     Pseudo
                 </label>
-                <input type="text" id="register_username" name="username" required placeholder="agent007"
+                <input type="text" id="register_username" name="name" required placeholder="agent007"
                        class="w-full bg-black/50 border border-gray-700 hover:border-gray-500 focus:border-valo-red focus:ring-1 focus:ring-valo-red outline-none rounded px-4 py-2.5 text-sm transition-colors duration-150">
             </div>
 
