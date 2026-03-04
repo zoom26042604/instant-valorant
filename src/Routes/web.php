@@ -102,14 +102,30 @@ if ($uri === '/favicon.ico') {
     $user = R::load('user', $userId);
     $userGames = R::find('usergame', 'user_id = ?', [$userId]);
     $gamesData = [];
+    $totalPlaytime = 0;
     foreach ($userGames as $ug) {
         $entry = ['ug' => $ug, 'game' => null];
         if ($ug->game_id) {
             $entry['game'] = R::load('game', $ug->game_id);
         }
+        $totalPlaytime += (int)($ug->playtime ?? 0);
         $gamesData[] = $entry;
     }
+    $totalGames = count($gamesData);
+    $totalAchievements = R::count('userachievement', 'user_id = ?', [$userId]);
     require __DIR__ . '/../../views/profile/index.php';
+} elseif ($uri === '/profile/agent' && $method === 'POST') {
+    Auth::webRequireAuth();
+    $userId = $_SESSION['user_id'];
+    $user = R::load('user', $userId);
+    $allowedAgents = ['astra','breach','brimstone','chamber','clove','cypher','deadlock','fade','gekko','harbor','iso','jett','kayo','killjoy','neon','omen','phoenix','raze','reyna','sage','skye','sova','tejo','veto','viper','vyse','waylay','yoru'];
+    $agent = $_POST['agent'] ?? null;
+    if ($agent && in_array($agent, $allowedAgents)) {
+        $user->agent = $agent;
+        R::store($user);
+    }
+    header('Location: /profile');
+    exit;
 } elseif ($uri === '/profile/games/add' && $method === 'GET') {
     Auth::webRequireAuth();
     $games = R::findAll('game');
