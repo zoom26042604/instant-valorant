@@ -145,6 +145,13 @@ if ($uri === '/favicon.ico') {
     (new ProfileController())->webUnlockAchievement((int)$m[1]);
 
 // Admin
+} elseif ($uri === '/admin' && $method === 'GET') {
+    Auth::webRequireAdmin();
+    require __DIR__ . '/../../views/admin/index.php';
+} elseif ($uri === '/admin/games' && $method === 'GET') {
+    Auth::webRequireAdmin();
+    $games = R::findAll('game');
+    require __DIR__ . '/../../views/admin/games.php';
 } elseif ($uri === '/admin/users' && $method === 'GET') {
     Auth::webRequireAdmin();
     $users = R::findAll('user');

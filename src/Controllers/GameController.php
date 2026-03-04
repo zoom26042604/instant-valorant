@@ -68,6 +68,7 @@ class GameController
             echo json_encode(['error' => 'Game not found']);
             return;
         }
+        $this->cascadeDeleteGame($id);
         R::trash($game);
         echo json_encode(['message' => 'Game deleted']);
     }
@@ -138,9 +139,19 @@ class GameController
         Auth::webRequireAdmin();
         $game = R::load('game', $id);
         if ($game->id) {
+            $this->cascadeDeleteGame($id);
             R::trash($game);
         }
         header('Location: /games');
         exit;
+    }
+
+    private function cascadeDeleteGame(int $gameId): void
+    {
+        $achievements = R::find('achievement', 'game_id = ?', [$gameId]);
+        foreach ($achievements as $achievement) {
+            R::exec('DELETE FROM userachievement WHERE achievement_id = ?', [$achievement->id]);
+            R::trash($achievement);
+        }
     }
 }
