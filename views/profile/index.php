@@ -74,7 +74,7 @@
                     <img src="/assets/agent/<?= htmlspecialchars($currentAgent) ?>.webp"
                          alt="<?= htmlspecialchars($currentAgent) ?>"
                          class="object-cover rounded-2xl border border-white/10 group-hover:border-valo-red/40 transition-colors duration-200"
-                         style="width: 150px; height: 240px;">
+                         style="width: 170px; height: 240px;">
                 <?php else: ?>
                     <div class="rounded-2xl border border-white/10 group-hover:border-valo-red/40 transition-colors duration-200 flex items-center justify-center bg-white/5"
                          style="width: 140px; height: 240px;">
