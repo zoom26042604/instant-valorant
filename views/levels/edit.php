@@ -54,7 +54,7 @@
                 <p class="text-yellow-500 text-[10px] font-valo font-semibold tracking-[0.25em] uppercase">
                     // NIVEAU
                 </p>
-                <h1 class="font-valo font-bold text-2xl tracking-[0.1em] leading-none">
+                <h1 class="font-valo font-bold text-2xl tracking-widest leading-none">
                     MODIFIER : <?= htmlspecialchars(strtoupper($level->name)) ?>
                 </h1>
             </div>

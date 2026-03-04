@@ -80,10 +80,10 @@
                      alt=""
                      class="w-full h-full object-cover opacity-25 scale-105"
                      style="filter: blur(2px);">
-                <div class="absolute inset-0 bg-gradient-to-r from-black via-black/85 to-black/50"></div>
+                <div class="absolute inset-0 bg-linear-to-r from-black via-black/85 to-black/50"></div>
             </div>
         <?php else: ?>
-            <div class="absolute inset-0 bg-gradient-to-br from-valo-red/8 via-black to-black"></div>
+            <div class="absolute inset-0 bg-linear-to-br from-valo-red/8 via-black to-black"></div>
         <?php endif; ?>
 
         <!-- Grille décorative Valorant -->
@@ -175,14 +175,14 @@
                     <?php endif; ?>
                     <?php if (!empty($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
                         <a href="/games/<?= $game->id ?>/edit"
-                           class="flex items-center gap-1.5 text-[11px] font-valo tracking-[0.1em] uppercase text-white/40 hover:text-white border border-white/10 hover:border-white/30 px-3 py-2 transition-all duration-150">
+                           class="flex items-center gap-1.5 text-[11px] font-valo tracking-widest uppercase text-white/40 hover:text-white border border-white/10 hover:border-white/30 px-3 py-2 transition-all duration-150">
                             <i data-lucide="pencil" class="w-3 h-3"></i>
                             Modifier
                         </a>
                         <form method="POST" action="/games/<?= $game->id ?>/delete"
                               onsubmit="return confirm('Supprimer <?= htmlspecialchars(addslashes($game->name)) ?> ?')">
                             <button type="submit"
-                                    class="flex items-center gap-1.5 text-[11px] font-valo tracking-[0.1em] uppercase text-valo-red/50 hover:text-valo-red border border-valo-red/20 hover:border-valo-red/50 px-3 py-2 transition-all duration-150">
+                                    class="flex items-center gap-1.5 text-[11px] font-valo tracking-widest uppercase text-valo-red/50 hover:text-valo-red border border-valo-red/20 hover:border-valo-red/50 px-3 py-2 transition-all duration-150">
                                 <i data-lucide="trash-2" class="w-3 h-3"></i>
                                 Supprimer
                             </button>
@@ -242,7 +242,7 @@
                                         <?php if (!empty($_SESSION['user_id'])): ?>
                                             <form method="POST" action="/profile/achievements/<?= $achievement->id ?>/unlock">
                                                 <button type="submit"
-                                                        class="flex items-center gap-1.5 text-[11px] font-valo tracking-[0.1em] uppercase text-yellow-500/50 hover:text-yellow-400 border border-yellow-500/20 hover:border-yellow-500/50 px-3 py-1 transition-all duration-150">
+                                                        class="flex items-center gap-1.5 text-[11px] font-valo tracking-widest uppercase text-yellow-500/50 hover:text-yellow-400 border border-yellow-500/20 hover:border-yellow-500/50 px-3 py-1 transition-all duration-150">
                                                     <i data-lucide="unlock" class="w-3 h-3"></i>
                                                     Débloquer
                                                 </button>
@@ -252,7 +252,7 @@
                                             <form method="POST" action="/achievements/<?= $achievement->id ?>/delete"
                                                   onsubmit="return confirm('Supprimer ?')">
                                                 <button type="submit"
-                                                        class="flex items-center gap-1.5 text-[11px] font-valo tracking-[0.1em] uppercase text-valo-red/50 hover:text-valo-red border border-valo-red/20 hover:border-valo-red/50 px-3 py-1 transition-all duration-150">
+                                                        class="flex items-center gap-1.5 text-[11px] font-valo tracking-widest uppercase text-valo-red/50 hover:text-valo-red border border-valo-red/20 hover:border-valo-red/50 px-3 py-1 transition-all duration-150">
                                                     <i data-lucide="trash-2" class="w-3 h-3"></i>
                                                     Supprimer
                                                 </button>

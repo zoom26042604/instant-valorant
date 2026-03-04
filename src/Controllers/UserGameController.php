@@ -146,9 +146,12 @@ class UserGameController
 
         if (!empty($ug->game_id)) {
             $this->autoUnlockDebutant($userId, $ug->game_id);
+            $_SESSION['success'] = 'Jeu ajouté à votre bibliothèque !';
+            header('Location: /games/' . $ug->game_id);
+        } else {
+            $_SESSION['success'] = 'Jeu personnalisé ajouté à votre bibliothèque !';
+            header('Location: /profile');
         }
-
-        header('Location: /profile');
         exit;
     }
 
@@ -181,6 +184,7 @@ class UserGameController
         $ug = R::load('usergame', $id);
 
         if ($ug->id && $ug->user_id == $userId) {
+            $gameId = $ug->game_id;
             if ($ug->game_id) {
                 R::exec(
                     'DELETE FROM userachievement WHERE user_id = ? AND achievement_id IN (SELECT id FROM achievement WHERE game_id = ?)',
@@ -188,9 +192,12 @@ class UserGameController
                 );
             }
             R::trash($ug);
+            $_SESSION['success'] = 'Jeu supprimé de votre bibliothèque';
+            $redirect = !empty($_POST['_redirect']) ? $_POST['_redirect'] : ($gameId ? '/games/' . $gameId : '/profile');
+            header('Location: ' . $redirect);
+        } else {
+            header('Location: /profile');
         }
-
-        header('Location: /profile');
         exit;
     }
 

@@ -104,7 +104,7 @@
                         //</span>
                 </div>
                 <div class="relative z-10">
-                    <p class="font-valo font-bold text-2xl tracking-[0.1em] mb-2">AGENTS</p>
+                    <p class="font-valo font-bold text-2xl tracking-widest mb-2">AGENTS</p>
                     <p class="text-xs text-white/50 leading-relaxed">Gérer les utilisateurs, changer les rôles,
                         supprimer des comptes.</p>
                 </div>
@@ -134,7 +134,7 @@
                         //</span>
                 </div>
                 <div class="relative z-10">
-                    <p class="font-valo font-bold text-2xl tracking-[0.1em] mb-2">JEUX & SUCCÈS</p>
+                    <p class="font-valo font-bold text-2xl tracking-widest mb-2">JEUX & SUCCÈS</p>
                     <p class="text-xs text-white/50 leading-relaxed">Ajouter, modifier ou supprimer des jeux et leurs
                         succès.</p>
                 </div>

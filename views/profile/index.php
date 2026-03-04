@@ -262,6 +262,7 @@
                                 <?php endif; ?>
                                 <form method="POST" action="/profile/games/<?= $ug->id ?>/delete"
                                       onsubmit="return confirm('Retirer ce jeu ?')">
+                                    <input type="hidden" name="_redirect" value="/profile">
                                     <button type="submit"
                                             class="flex items-center gap-1.5 text-[11px] font-valo tracking-widest uppercase text-valo-red/50 hover:text-valo-red border border-valo-red/20 hover:border-valo-red/50 px-3 py-1 transition-all duration-150">
                                         <i data-lucide="trash-2" class="w-3 h-3"></i>

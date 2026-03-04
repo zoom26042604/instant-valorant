@@ -12,7 +12,7 @@
 
 <body class="min-h-screen bg-valo-dark text-white flex items-center justify-center relative overflow-hidden">
 
-<div class="absolute inset-0 bg-gradient-to-br from-valo-dark via-black to-valo-red/20 pointer-events-none"></div>
+<div class="absolute inset-0 bg-linear-to-br from-valo-dark via-black to-valo-red/20 pointer-events-none"></div>
 <div class="absolute top-0 left-0 w-full h-1 bg-valo-red"></div>
 
 <div class="relative z-10 w-full max-w-5xl mx-6 py-12">
