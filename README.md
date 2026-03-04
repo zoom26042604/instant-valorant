@@ -84,7 +84,7 @@ APP_PORT=8080
 ### 3. Start the containers
 
 ```bash
-docker compose up -d
+docker compose up --build -d
 ```
 
 The application will be available at [http://localhost:8080](http://localhost:8080).
