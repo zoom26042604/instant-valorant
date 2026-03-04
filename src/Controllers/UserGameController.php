@@ -94,6 +94,13 @@ class UserGameController
             return;
         }
 
+        if ($ug->game_id) {
+            R::exec(
+                'DELETE FROM userachievement WHERE user_id = ? AND achievement_id IN (SELECT id FROM achievement WHERE game_id = ?)',
+                [$userId, $ug->game_id]
+            );
+        }
+
         R::trash($ug);
         echo json_encode(['message' => 'Game removed from library']);
     }
@@ -174,6 +181,12 @@ class UserGameController
         $ug = R::load('usergame', $id);
 
         if ($ug->id && $ug->user_id == $userId) {
+            if ($ug->game_id) {
+                R::exec(
+                    'DELETE FROM userachievement WHERE user_id = ? AND achievement_id IN (SELECT id FROM achievement WHERE game_id = ?)',
+                    [$userId, $ug->game_id]
+                );
+            }
             R::trash($ug);
         }
 

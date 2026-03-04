@@ -14,7 +14,7 @@
         INSTANT<span class="text-valo-red font-valo">-VALORANT</span>
     </a>
     <div class="hidden md:flex items-center gap-2 text-[11px] tracking-[0.15em] font-valo font-semibold text-white">
-        <span class="w-1.5 h-1.5 rounded-full bg-yellow-500 dot-pulse"></span>
+        <span class="w-1.5 h-1.5 rounded-full bg-valo-red dot-pulse"></span>
         KINGDOM CORP. · ACCÈS ADMINISTRATEUR
     </div>
     <div class="flex items-center gap-2 sm:gap-3">

@@ -100,8 +100,8 @@
             </div>
             <div class="flex items-center justify-between relative z-10 pt-3 border-t border-white/5">
                 <span class="text-[11px] font-valo tracking-widest text-white/30"><?= $totalUsers ?> agents · <?= $totalAdmins ?> admins</span>
-                <div class="flex items-center gap-1.5 text-[11px] font-valo tracking-widest text-yellow-500/50 group-hover:text-yellow-400 uppercase transition-colors">
-                    Accéder <i data-lucide="arrow-right" class="w-3 h-3 group-hover:translate-x-1 transition-transform duration-200"></i>
+                <div class="flex items-center gap-1.5 leading-none text-[11px] font-valo tracking-widest text-yellow-500/50 group-hover:text-yellow-400 uppercase transition-colors">
+                    Accéder <i data-lucide="arrow-big-right" class="w-3.5 h-3.5 shrink-0 group-hover:translate-x-1 transition-transform duration-200"></i>
                 </div>
             </div>
         </a>
@@ -121,8 +121,8 @@
             </div>
             <div class="flex items-center justify-between relative z-10 pt-3 border-t border-white/5">
                 <span class="text-[11px] font-valo tracking-widest text-white/30"><?= $totalGames ?> jeux · <?= $totalAch ?> succès</span>
-                <div class="flex items-center gap-1.5 text-[11px] font-valo tracking-widest text-valo-red/50 group-hover:text-valo-red uppercase transition-colors">
-                    Accéder <i data-lucide="arrow-right" class="w-3 h-3 group-hover:translate-x-1 transition-transform duration-200"></i>
+                <div class="flex items-center gap-1.5 leading-none text-[11px] font-valo tracking-widest text-valo-red/50 group-hover:text-valo-red uppercase transition-colors">
+                    Accéder <i data-lucide="arrow-big-right" class="w-3.5 h-3.5 shrink-0 group-hover:translate-x-1 transition-transform duration-200"></i>
                 </div>
             </div>
         </a>
